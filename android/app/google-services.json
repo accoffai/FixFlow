@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "444153743386",
+    "project_id": "fix-flow-a-i-nmfa2m",
+    "storage_bucket": "fix-flow-a-i-nmfa2m.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444153743386:android:eab6c516316c5c276be9a3",
+        "android_client_info": {
+          "package_name": "com.mycompany.fixflowai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444153743386-4mvt7r4oc3iqprbbp2kmf7ic4i4ar65e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.fixflowai",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "444153743386-m3egv52v42nefd77mk3nghurmc6e4m4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPb4bJNotcaktQVMmQMNpYdXMrrKWh3NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444153743386-m3egv52v42nefd77mk3nghurmc6e4m4e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "444153743386-doa357o74crh5urkutght6nd109phvdf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.fixflowai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
