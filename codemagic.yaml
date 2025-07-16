@@ -4,19 +4,33 @@ workflows:
     environment:
       flutter: "3.19.0"
       vars:
-        OPENAI_API_KEY: Encrypted(OPENAI_API_KEY)
-        XANO_BASE_URL: Encrypted(XANO_BASE_URL)
-        APP_STORE_CONNECT_ISSUER_ID: Encrypted(APP_STORE_CONNECT_ISSUER_ID)
-        APP_STORE_CONNECT_KEY_IDENTIFIER: Encrypted(APP_STORE_CONNECT_KEY_IDENTIFIER)
-        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(APP_STORE_CONNECT_PRIVATE_KEY)
-        GOOGLE_PLAY_JSON_KEY: Encrypted(GOOGLE_PLAY_JSON_KEY)
+        OPENAI_API_KEY: $Open_API_Key
+        XANO_BASE_URL: $xano_base_url
+        APP_STORE_CONNECT_ISSUER_ID: $App_Store_Connect_Issuer_ID
+        APP_STORE_CONNECT_KEY_IDENTIFIER: $App_Store_Connect_Key_ID
+        APP_STORE_CONNECT_PRIVATE_KEY: $App_Store_Connect_Private_Key
+        APP_STORE_CONNECT_PRIVATE_APP_ID: $App_Store_Connect_Private_App_ID
+        GOOGLE_ALIAS: $Google_Alias
+        KEYSTORE_PASSWORD: $keystore_password
+        ALIAS_PASSWORD: $Alias_Password
+        ORGANIZATION_ID: $organization_ID
+        PROJECT_ID: $project_ID
+
     scripts:
-      - name: Install Dependencies
+      - name: Install dependencies
         script: flutter pub get
+
       - name: Build Android APK
-        script: flutter build apk --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY --dart-define=XANO_BASE_URL=$XANO_BASE_URL
+        script: |
+          flutter build apk --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY \
+                            --dart-define=XANO_BASE_URL=$XANO_BASE_URL
+
       - name: Build iOS
-        script: flutter build ios --release --no-codesign --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY --dart-define=XANO_BASE_URL=$XANO_BASE_URL
+        script: |
+          flutter build ios --release --no-codesign \
+              --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY \
+              --dart-define=XANO_BASE_URL=$XANO_BASE_URL
+
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
       - build/ios/iphoneos/Runner.app
