@@ -17,6 +17,9 @@ workflows:
         PROJECT_ID: $project_ID
 
     scripts:
+      - name: Force Flutter upgrade (to ensure correct version)
+        script: flutter upgrade
+
       - name: Install dependencies
         script: flutter pub get
 
