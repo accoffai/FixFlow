@@ -307,6 +307,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
                                 password: '',
                               );
 
+                              context.pushNamed(EntryWidget.routeName);
+
                               await FixFlowAIGroup.fixflowBrainCall.call();
 
                               if (!(_model.apiResultgx8?.succeeded ?? true)) {

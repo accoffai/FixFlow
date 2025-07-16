@@ -70,11 +70,13 @@ class FixFlowGPTWidget extends StatefulWidget {
     required this.fixflowgpt,
     required this.userConversation,
     required this.aiConversation,
+    this.gps,
   });
 
   final dynamic fixflowgpt;
   final String? userConversation;
   final String? aiConversation;
+  final LatLng? gps;
 
   static String routeName = 'FixFlowGPT';
   static String routePath = '/fixFlowGPT';
@@ -154,23 +156,61 @@ class _FixFlowGPTWidgetState extends State<FixFlowGPTWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'FixFlow AI Room',
-                        style:
-                            FlutterFlowTheme.of(context).headlineSmall.override(
-                                  font: GoogleFonts.interTight(
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineSmall
-                                        .fontStyle,
-                                  ),
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          context.pushNamed(
+                            MainDashWidget.routeName,
+                            queryParameters: {
+                              'planProject': serializeParam(
+                                widget.fixflowgpt,
+                                ParamType.JSON,
+                              ),
+                              'quickLogsPage': serializeParam(
+                                widget.fixflowgpt,
+                                ParamType.JSON,
+                              ),
+                              'myProjects': serializeParam(
+                                widget.fixflowgpt,
+                                ParamType.JSON,
+                              ),
+                              'mainDash': serializeParam(
+                                widget.fixflowgpt,
+                                ParamType.JSON,
+                              ),
+                              'userName': serializeParam(
+                                widget.fixflowgpt?.toString(),
+                                ParamType.String,
+                              ),
+                              'gps': serializeParam(
+                                widget.gps,
+                                ParamType.LatLng,
+                              ),
+                            }.withoutNulls,
+                          );
+                        },
+                        child: Text(
+                          'FixFlow AI Room',
+                          style: FlutterFlowTheme.of(context)
+                              .headlineSmall
+                              .override(
+                                font: GoogleFonts.interTight(
                                   fontWeight: FontWeight.w600,
                                   fontStyle: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .fontStyle,
                                 ),
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w600,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .headlineSmall
+                                    .fontStyle,
+                              ),
+                        ),
                       ),
                       FlutterFlowIconButton(
                         borderRadius: 20.0,

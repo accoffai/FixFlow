@@ -92,7 +92,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: EntryWidget.routeName,
           path: EntryWidget.routePath,
-          builder: (context, params) => EntryWidget(),
+          builder: (context, params) => EntryWidget(
+            login: params.getParam(
+              'login',
+              ParamType.JSON,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+          ),
         ),
         FFRoute(
           name: MainDashWidget.routeName,
@@ -370,6 +379,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'diy',
               ParamType.JSON,
             ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
           ),
         ),
         FFRoute(
@@ -596,7 +609,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: ProfilenewWidget.routeName,
           path: ProfilenewWidget.routePath,
-          builder: (context, params) => ProfilenewWidget(),
+          builder: (context, params) => ProfilenewWidget(
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+            profile: params.getParam(
+              'profile',
+              ParamType.String,
+            ),
+            main: params.getParam(
+              'main',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: FixFlowGPTWidget.routeName,
@@ -613,6 +639,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             aiConversation: params.getParam(
               'aiConversation',
               ParamType.String,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
             ),
           ),
         )

@@ -31,10 +31,6 @@ class MyProjectGuidanceModel extends FlutterFlowModel<MyProjectGuidanceWidget> {
   ApiCallResponse? apiResultm18;
   // Stores action output result for [Backend Call - API (fixflow brain)] action in IconButton widget.
   ApiCallResponse? apiResultw44;
-  bool isDataUploading_uploadData6a5 = false;
-  FFUploadedFile uploadedLocalFile_uploadData6a5 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-
   // Stores action output result for [Backend Call - API (fixflow brain)] action in chat widget.
   ApiCallResponse? apiResultom7;
   bool isDataUploading_uploadDataRmt = false;

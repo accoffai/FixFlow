@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'profilenew_model.dart';
@@ -22,7 +23,16 @@ export 'profilenew_model.dart';
 /// dark background. Our colors are black, orange and grey. Add a real picture
 /// and make it more ready.
 class ProfilenewWidget extends StatefulWidget {
-  const ProfilenewWidget({super.key});
+  const ProfilenewWidget({
+    super.key,
+    this.gps,
+    this.profile,
+    this.main,
+  });
+
+  final LatLng? gps;
+  final String? profile;
+  final dynamic main;
 
   static String routeName = 'profilenew';
   static String routePath = '/profilenew';
@@ -62,19 +72,57 @@ class _ProfilenewWidgetState extends State<ProfilenewWidget> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           automaticallyImplyLeading: false,
-          title: Text(
-            'Community Profile',
-            style: FlutterFlowTheme.of(context).titleLarge.override(
-                  font: GoogleFonts.interTight(
+          title: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () async {
+              context.pushNamed(
+                MainDashWidget.routeName,
+                queryParameters: {
+                  'planProject': serializeParam(
+                    widget.main,
+                    ParamType.JSON,
+                  ),
+                  'quickLogsPage': serializeParam(
+                    widget.main,
+                    ParamType.JSON,
+                  ),
+                  'myProjects': serializeParam(
+                    widget.main,
+                    ParamType.JSON,
+                  ),
+                  'mainDash': serializeParam(
+                    widget.main,
+                    ParamType.JSON,
+                  ),
+                  'userName': serializeParam(
+                    widget.profile,
+                    ParamType.String,
+                  ),
+                  'gps': serializeParam(
+                    widget.gps,
+                    ParamType.LatLng,
+                  ),
+                }.withoutNulls,
+              );
+            },
+            child: Text(
+              'Community Profile',
+              style: FlutterFlowTheme.of(context).titleLarge.override(
+                    font: GoogleFonts.interTight(
+                      fontWeight: FontWeight.w600,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).titleLarge.fontStyle,
+                    ),
+                    color: Colors.white,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w600,
                     fontStyle:
                         FlutterFlowTheme.of(context).titleLarge.fontStyle,
                   ),
-                  color: Colors.white,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FlutterFlowTheme.of(context).titleLarge.fontStyle,
-                ),
+            ),
           ),
           actions: [
             Padding(

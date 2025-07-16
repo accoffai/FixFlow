@@ -73,6 +73,7 @@ class MyProjectsWidget extends StatefulWidget {
     required this.lastUpdated,
     required this.project,
     required this.diy,
+    this.gps,
   });
 
   final String? savedChecklist;
@@ -83,6 +84,7 @@ class MyProjectsWidget extends StatefulWidget {
   final String? lastUpdated;
   final String? project;
   final dynamic diy;
+  final LatLng? gps;
 
   static String routeName = 'MyProjects';
   static String routePath = '/myProjects';
@@ -153,20 +155,57 @@ class _MyProjectsWidgetState extends State<MyProjectsWidget> {
         appBar: AppBar(
           backgroundColor: Color(0xFF1A1A1A),
           automaticallyImplyLeading: false,
-          title: Text(
-            'My Projects',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  font: GoogleFonts.interTight(
+          title: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () async {
+              context.pushNamed(
+                MainDashWidget.routeName,
+                queryParameters: {
+                  'planProject': serializeParam(
+                    widget.savedProject,
+                    ParamType.JSON,
+                  ),
+                  'quickLogsPage': serializeParam(
+                    widget.savedProject,
+                    ParamType.JSON,
+                  ),
+                  'myProjects': serializeParam(
+                    widget.savedProject,
+                    ParamType.JSON,
+                  ),
+                  'mainDash': serializeParam(
+                    widget.savedProject,
+                    ParamType.JSON,
+                  ),
+                  'userName': serializeParam(
+                    widget.savedProject?.toString(),
+                    ParamType.String,
+                  ),
+                  'gps': serializeParam(
+                    widget.gps,
+                    ParamType.LatLng,
+                  ),
+                }.withoutNulls,
+              );
+            },
+            child: Text(
+              'My Projects',
+              style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    font: GoogleFonts.interTight(
+                      fontWeight: FontWeight.bold,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).headlineMedium.fontStyle,
+                    ),
+                    color: Colors.white,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.bold,
                     fontStyle:
                         FlutterFlowTheme.of(context).headlineMedium.fontStyle,
                   ),
-                  color: Colors.white,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.bold,
-                  fontStyle:
-                      FlutterFlowTheme.of(context).headlineMedium.fontStyle,
-                ),
+            ),
           ),
           actions: [
             Padding(

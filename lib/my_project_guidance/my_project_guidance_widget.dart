@@ -1132,47 +1132,6 @@ class _MyProjectGuidanceWidgetState extends State<MyProjectGuidanceWidget> {
                                   inputValue: widget.savedProject?.toString(),
                                 );
 
-                                final selectedMedia =
-                                    await selectMediaWithSourceBottomSheet(
-                                  context: context,
-                                  allowPhoto: true,
-                                );
-                                if (selectedMedia != null &&
-                                    selectedMedia.every((m) =>
-                                        validateFileFormat(
-                                            m.storagePath, context))) {
-                                  safeSetState(() => _model
-                                      .isDataUploading_uploadData6a5 = true);
-                                  var selectedUploadedFiles =
-                                      <FFUploadedFile>[];
-
-                                  try {
-                                    selectedUploadedFiles = selectedMedia
-                                        .map((m) => FFUploadedFile(
-                                              name:
-                                                  m.storagePath.split('/').last,
-                                              bytes: m.bytes,
-                                              height: m.dimensions?.height,
-                                              width: m.dimensions?.width,
-                                              blurHash: m.blurHash,
-                                            ))
-                                        .toList();
-                                  } finally {
-                                    _model.isDataUploading_uploadData6a5 =
-                                        false;
-                                  }
-                                  if (selectedUploadedFiles.length ==
-                                      selectedMedia.length) {
-                                    safeSetState(() {
-                                      _model.uploadedLocalFile_uploadData6a5 =
-                                          selectedUploadedFiles.first;
-                                    });
-                                  } else {
-                                    safeSetState(() {});
-                                    return;
-                                  }
-                                }
-
                                 if (!(_model.apiResultw44?.succeeded ?? true)) {
                                   context.pushNamed(FalseErrorWidget.routeName);
                                 }

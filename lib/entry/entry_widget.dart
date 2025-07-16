@@ -21,7 +21,14 @@ export 'entry_model.dart';
 /// bold, with smooth transitions between Sign-Up and Login modes. Allow
 /// Google Auth as optional in future update.”
 class EntryWidget extends StatefulWidget {
-  const EntryWidget({super.key});
+  const EntryWidget({
+    super.key,
+    this.login,
+    this.gps,
+  });
+
+  final dynamic login;
+  final LatLng? gps;
 
   static String routeName = 'entry';
   static String routePath = '/entry';
@@ -518,6 +525,36 @@ class _EntryWidgetState extends State<EntryWidget>
                                     await AuthGroup.authLoginCall.call(
                                   email: '',
                                   password: '',
+                                );
+
+                                context.pushNamed(
+                                  MainDashWidget.routeName,
+                                  queryParameters: {
+                                    'planProject': serializeParam(
+                                      widget.login,
+                                      ParamType.JSON,
+                                    ),
+                                    'quickLogsPage': serializeParam(
+                                      widget.login,
+                                      ParamType.JSON,
+                                    ),
+                                    'myProjects': serializeParam(
+                                      widget.login,
+                                      ParamType.JSON,
+                                    ),
+                                    'mainDash': serializeParam(
+                                      widget.login,
+                                      ParamType.JSON,
+                                    ),
+                                    'userName': serializeParam(
+                                      widget.login?.toString(),
+                                      ParamType.String,
+                                    ),
+                                    'gps': serializeParam(
+                                      widget.gps,
+                                      ParamType.LatLng,
+                                    ),
+                                  }.withoutNulls,
                                 );
 
                                 if (!(_model.apiResult1dy?.succeeded ?? true)) {
