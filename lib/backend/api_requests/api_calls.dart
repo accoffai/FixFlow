@@ -1189,7 +1189,8 @@ class PostContractorProfileCall {
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
-   
+   );
+
 
   }
 }
