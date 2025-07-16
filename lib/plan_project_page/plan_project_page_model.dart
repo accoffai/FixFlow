@@ -1,5 +1,6 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
+import '/index.dart';
 import 'plan_project_page_widget.dart' show PlanProjectPageWidget;
 import 'package:flutter/material.dart';
 
@@ -7,41 +8,56 @@ class PlanProjectPageModel extends FlutterFlowModel<PlanProjectPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in PlanProjectPage widget.
+  ApiCallResponse? apiResultk46;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in Column widget.
+  ApiCallResponse? apiResultg9o;
+  // State field(s) for projectName widget.
+  FocusNode? projectNameFocusNode;
+  TextEditingController? projectNameTextController;
+  String? Function(BuildContext, String?)? projectNameTextControllerValidator;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in projectName widget.
+  ApiCallResponse? apiResultspj;
+  // State field(s) for describeProject widget.
+  FocusNode? describeProjectFocusNode;
+  TextEditingController? describeProjectTextController;
+  String? Function(BuildContext, String?)?
+      describeProjectTextControllerValidator;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in describeProject widget.
+  ApiCallResponse? apiResultok2;
+  // State field(s) for estimatedBudget widget.
+  FocusNode? estimatedBudgetFocusNode;
+  TextEditingController? estimatedBudgetTextController;
+  String? Function(BuildContext, String?)?
+      estimatedBudgetTextControllerValidator;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in estimatedBudget widget.
+  ApiCallResponse? apiResultdqr;
+  // State field(s) for Zip widget.
+  FocusNode? zipFocusNode;
+  TextEditingController? zipTextController;
+  String? Function(BuildContext, String?)? zipTextControllerValidator;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in Zip widget.
+  ApiCallResponse? apiResultlhz;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in Gps widget.
+  ApiCallResponse? apiResult9ui;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in Button widget.
+  ApiCallResponse? apiResulttwr;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
+    projectNameFocusNode?.dispose();
+    projectNameTextController?.dispose();
 
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
+    describeProjectFocusNode?.dispose();
+    describeProjectTextController?.dispose();
 
-    textFieldFocusNode3?.dispose();
-    textController3?.dispose();
+    estimatedBudgetFocusNode?.dispose();
+    estimatedBudgetTextController?.dispose();
 
-    textFieldFocusNode4?.dispose();
-    textController4?.dispose();
+    zipFocusNode?.dispose();
+    zipTextController?.dispose();
   }
 }

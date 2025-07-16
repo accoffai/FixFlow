@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'communityprojects_widget.dart' show CommunityprojectsWidget;
+import 'profilenew_widget.dart' show ProfilenewWidget;
 import 'package:flutter/material.dart';
 
-class CommunityprojectsModel extends FlutterFlowModel<CommunityprojectsWidget> {
+class ProfilenewModel extends FlutterFlowModel<ProfilenewWidget> {
   @override
   void initState(BuildContext context) {}
 

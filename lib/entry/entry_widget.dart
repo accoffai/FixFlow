@@ -1,8 +1,11 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'entry_model.dart';
@@ -40,16 +43,74 @@ class _EntryWidgetState extends State<EntryWidget>
     super.initState();
     _model = createModel(context, () => EntryModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiResultqux = await FixFlowAIGroup.fixflowBrainCall.call();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+      await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
+      await FixFlowAIGroup.postSalesEngineLogCall.call();
+
+      if (!(_model.apiResultqux?.succeeded ?? true)) {
+        context.pushNamed(FalseErrorWidget.routeName);
+      }
+    });
+
+    _model.emailInputTextController ??= TextEditingController();
+    _model.emailInputFocusNode ??= FocusNode();
+
+    _model.passwordInputTextController ??= TextEditingController();
+    _model.passwordInputFocusNode ??= FocusNode();
+
+    _model.confirmPasswordInputTextController ??= TextEditingController();
+    _model.confirmPasswordInputFocusNode ??= FocusNode();
 
     animationsMap.addAll({
+      'textFieldOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeIn,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          FadeEffect(
+            curve: Curves.easeOut,
+            delay: 600.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'buttonOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeIn,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 600.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          FadeEffect(
+            curve: Curves.easeOut,
+            delay: 1800.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
       'textOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
@@ -160,8 +221,8 @@ class _EntryWidgetState extends State<EntryWidget>
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             TextFormField(
-                              controller: _model.textController1,
-                              focusNode: _model.textFieldFocusNode1,
+                              controller: _model.emailInputTextController,
+                              focusNode: _model.emailInputFocusNode,
                               autofocus: false,
                               textInputAction: TextInputAction.next,
                               obscureText: false,
@@ -243,15 +304,17 @@ class _EntryWidgetState extends State<EntryWidget>
                                         .fontStyle,
                                   ),
                               keyboardType: TextInputType.emailAddress,
-                              validator: _model.textController1Validator
+                              validator: _model
+                                  .emailInputTextControllerValidator
                                   .asValidator(context),
-                            ),
+                            ).animateOnPageLoad(
+                                animationsMap['textFieldOnPageLoadAnimation']!),
                             TextFormField(
-                              controller: _model.textController2,
-                              focusNode: _model.textFieldFocusNode2,
+                              controller: _model.passwordInputTextController,
+                              focusNode: _model.passwordInputFocusNode,
                               autofocus: false,
                               textInputAction: TextInputAction.done,
-                              obscureText: !_model.passwordVisibility1,
+                              obscureText: !_model.passwordInputVisibility,
                               decoration: InputDecoration(
                                 hintText: 'Password',
                                 hintStyle: FlutterFlowTheme.of(context)
@@ -309,12 +372,12 @@ class _EntryWidgetState extends State<EntryWidget>
                                     20.0, 16.0, 20.0, 16.0),
                                 suffixIcon: InkWell(
                                   onTap: () => safeSetState(
-                                    () => _model.passwordVisibility1 =
-                                        !_model.passwordVisibility1,
+                                    () => _model.passwordInputVisibility =
+                                        !_model.passwordInputVisibility,
                                   ),
                                   focusNode: FocusNode(skipTraversal: true),
                                   child: Icon(
-                                    _model.passwordVisibility1
+                                    _model.passwordInputVisibility
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
                                     size: 22,
@@ -342,15 +405,18 @@ class _EntryWidgetState extends State<EntryWidget>
                                         .bodyLarge
                                         .fontStyle,
                                   ),
-                              validator: _model.textController2Validator
+                              validator: _model
+                                  .passwordInputTextControllerValidator
                                   .asValidator(context),
                             ),
                             TextFormField(
-                              controller: _model.textController3,
-                              focusNode: _model.textFieldFocusNode3,
+                              controller:
+                                  _model.confirmPasswordInputTextController,
+                              focusNode: _model.confirmPasswordInputFocusNode,
                               autofocus: false,
                               textInputAction: TextInputAction.done,
-                              obscureText: !_model.passwordVisibility2,
+                              obscureText:
+                                  !_model.confirmPasswordInputVisibility,
                               decoration: InputDecoration(
                                 hintText: 'Confirm password',
                                 hintStyle: FlutterFlowTheme.of(context)
@@ -408,12 +474,13 @@ class _EntryWidgetState extends State<EntryWidget>
                                     20.0, 16.0, 20.0, 16.0),
                                 suffixIcon: InkWell(
                                   onTap: () => safeSetState(
-                                    () => _model.passwordVisibility2 =
-                                        !_model.passwordVisibility2,
+                                    () => _model
+                                            .confirmPasswordInputVisibility =
+                                        !_model.confirmPasswordInputVisibility,
                                   ),
                                   focusNode: FocusNode(skipTraversal: true),
                                   child: Icon(
-                                    _model.passwordVisibility2
+                                    _model.confirmPasswordInputVisibility
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
                                     size: 22,
@@ -441,12 +508,23 @@ class _EntryWidgetState extends State<EntryWidget>
                                         .bodyLarge
                                         .fontStyle,
                                   ),
-                              validator: _model.textController3Validator
+                              validator: _model
+                                  .confirmPasswordInputTextControllerValidator
                                   .asValidator(context),
                             ),
                             FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                _model.apiResult1dy =
+                                    await AuthGroup.authLoginCall.call(
+                                  email: '',
+                                  password: '',
+                                );
+
+                                if (!(_model.apiResult1dy?.succeeded ?? true)) {
+                                  context.pushNamed(FalseErrorWidget.routeName);
+                                }
+
+                                safeSetState(() {});
                               },
                               text: 'Continue with Email',
                               options: FFButtonOptions(
@@ -480,7 +558,8 @@ class _EntryWidgetState extends State<EntryWidget>
                                 ),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
-                            ),
+                            ).animateOnPageLoad(
+                                animationsMap['buttonOnPageLoadAnimation']!),
                             Container(
                               width: double.infinity,
                               height: 1.0,
@@ -528,25 +607,44 @@ class _EntryWidgetState extends State<EntryWidget>
                                 ),
                           ).animateOnPageLoad(
                               animationsMap['textOnPageLoadAnimation']!),
-                          Text(
-                            ' Sign In',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              _model.apiResultpvs =
+                                  await AuthGroup.authLoginCall.call(
+                                email: '',
+                                password: '',
+                              );
+
+                              if (!(_model.apiResultpvs?.succeeded ?? true)) {
+                                context.pushNamed(FalseErrorWidget.routeName);
+                              }
+
+                              safeSetState(() {});
+                            },
+                            child: Text(
+                              ' Sign In',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: Color(0xFF007AFF),
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
                                   ),
-                                  color: Color(0xFF007AFF),
-                                  fontSize: 16.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
+                            ),
                           ),
                         ],
                       ),
@@ -578,46 +676,79 @@ class _EntryWidgetState extends State<EntryWidget>
                                       .fontStyle,
                                 ),
                           ),
-                          Text(
-                            ' Sign Up',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              _model.apiResultdib =
+                                  await AuthGroup.authSignupCall.call();
+
+                              if (!(_model.apiResultdib?.succeeded ?? true)) {
+                                context.pushNamed(FalseErrorWidget.routeName);
+                              }
+
+                              safeSetState(() {});
+                            },
+                            child: Text(
+                              ' Sign Up',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: Color(0xFF007AFF),
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
                                   ),
-                                  color: Color(0xFF007AFF),
-                                  fontSize: 16.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
+                            ),
                           ),
                         ],
                       ),
-                      Text(
-                        'Forgot your password?',
-                        textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodySmall.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontStyle,
-                              ),
-                              color: Color(0xFF007AFF),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          _model.apiResult2uu =
+                              await AuthGroup.forgotPasswordCall.call();
+
+                          if (!(_model.apiResult2uu?.succeeded ?? true)) {
+                            context.pushNamed(FalseErrorWidget.routeName);
+                          }
+
+                          safeSetState(() {});
+                        },
+                        child: Text(
+                          'Forgot your password?',
+                          textAlign: TextAlign.center,
+                          style:
+                              FlutterFlowTheme.of(context).bodySmall.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodySmall
+                                          .fontStyle,
+                                    ),
+                                    color: Color(0xFF007AFF),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodySmall
+                                        .fontStyle,
+                                  ),
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(

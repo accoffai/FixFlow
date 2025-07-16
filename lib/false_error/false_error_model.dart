@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'my_profile_widget.dart' show MyProfileWidget;
+import 'false_error_widget.dart' show FalseErrorWidget;
 import 'package:flutter/material.dart';
 
-class MyProfileModel extends FlutterFlowModel<MyProfileWidget> {
+class FalseErrorModel extends FlutterFlowModel<FalseErrorWidget> {
   @override
   void initState(BuildContext context) {}
 

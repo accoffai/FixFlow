@@ -97,37 +97,524 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: MainDashWidget.routeName,
           path: MainDashWidget.routePath,
-          builder: (context, params) => MainDashWidget(),
+          builder: (context, params) => MainDashWidget(
+            planProject: params.getParam(
+              'planProject',
+              ParamType.JSON,
+            ),
+            quickLogsPage: params.getParam(
+              'quickLogsPage',
+              ParamType.JSON,
+            ),
+            myProjects: params.getParam(
+              'myProjects',
+              ParamType.JSON,
+            ),
+            mainDash: params.getParam(
+              'mainDash',
+              ParamType.JSON,
+            ),
+            userName: params.getParam(
+              'userName',
+              ParamType.String,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+          ),
         ),
         FFRoute(
           name: DiagnosePageWidget.routeName,
           path: DiagnosePageWidget.routePath,
-          builder: (context, params) => DiagnosePageWidget(),
+          builder: (context, params) => DiagnosePageWidget(
+            userInput: params.getParam(
+              'userInput',
+              ParamType.String,
+            ),
+            zip: params.getParam(
+              'zip',
+              ParamType.String,
+            ),
+            photoURL: params.getParam(
+              'photoURL',
+              ParamType.String,
+            ),
+            problemDescription: params.getParam(
+              'problemDescription',
+              ParamType.String,
+            ),
+            location: params.getParam(
+              'location',
+              ParamType.String,
+            ),
+            diagnosisResults: params.getParam(
+              'diagnosisResults',
+              ParamType.String,
+            ),
+            suggestedFFix: params.getParam(
+              'suggestedFFix',
+              ParamType.String,
+            ),
+            fixSteps: params.getParam(
+              'fixSteps',
+              ParamType.String,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+            diagnoisePage: params.getParam(
+              'diagnoisePage',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: PlanProjectPageWidget.routeName,
           path: PlanProjectPageWidget.routePath,
-          builder: (context, params) => PlanProjectPageWidget(),
+          builder: (context, params) => PlanProjectPageWidget(
+            projectName: params.getParam(
+              'projectName',
+              ParamType.String,
+            ),
+            describeProject: params.getParam(
+              'describeProject',
+              ParamType.String,
+            ),
+            estimatedBudget: params.getParam(
+              'estimatedBudget',
+              ParamType.String,
+            ),
+            selectTIme: params.getParam(
+              'selectTIme',
+              ParamType.String,
+            ),
+            zip: params.getParam(
+              'zip',
+              ParamType.String,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+            planProjectPage: params.getParam(
+              'planProjectPage',
+              ParamType.JSON,
+            ),
+          ),
         ),
         FFRoute(
           name: FindContractorWidget.routeName,
           path: FindContractorWidget.routePath,
-          builder: (context, params) => FindContractorWidget(),
-        ),
-        FFRoute(
-          name: MyProfileWidget.routeName,
-          path: MyProfileWidget.routePath,
-          builder: (context, params) => MyProfileWidget(),
-        ),
-        FFRoute(
-          name: CommunityprojectsWidget.routeName,
-          path: CommunityprojectsWidget.routePath,
-          builder: (context, params) => CommunityprojectsWidget(),
+          builder: (context, params) => FindContractorWidget(
+            name: params.getParam(
+              'name',
+              ParamType.String,
+            ),
+            trade: params.getParam(
+              'trade',
+              ParamType.String,
+            ),
+            rating: params.getParam(
+              'rating',
+              ParamType.String,
+            ),
+            reviews: params.getParam(
+              'reviews',
+              ParamType.String,
+            ),
+            image: params.getParam(
+              'image',
+              ParamType.String,
+            ),
+            findContractor: params.getParam(
+              'findContractor',
+              ParamType.JSON,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+          ),
         ),
         FFRoute(
           name: IfOnlyThisAppCOuldWidget.routeName,
           path: IfOnlyThisAppCOuldWidget.routePath,
-          builder: (context, params) => IfOnlyThisAppCOuldWidget(),
+          builder: (context, params) => IfOnlyThisAppCOuldWidget(
+            userRequest: params.getParam(
+              'userRequest',
+              ParamType.String,
+            ),
+            ifOnlyAppPage: params.getParam(
+              'ifOnlyAppPage',
+              ParamType.JSON,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: BookingsPageWidget.routeName,
+          path: BookingsPageWidget.routePath,
+          builder: (context, params) => BookingsPageWidget(
+            filterStatus: params.getParam(
+              'filterStatus',
+              ParamType.String,
+            ),
+            sortData: params.getParam(
+              'sortData',
+              ParamType.String,
+            ),
+            myBookingsPage: params.getParam(
+              'myBookingsPage',
+              ParamType.JSON,
+            ),
+            companyName: params.getParam(
+              'companyName',
+              ParamType.String,
+            ),
+            rep: params.getParam(
+              'rep',
+              ParamType.String,
+            ),
+            fullfilmentStatus: params.getParam(
+              'fullfilmentStatus',
+              ParamType.String,
+            ),
+            date: params.getParam(
+              'date',
+              ParamType.String,
+            ),
+            time: params.getParam(
+              'time',
+              ParamType.String,
+            ),
+            location: params.getParam(
+              'location',
+              ParamType.String,
+            ),
+            rateService: params.getParam(
+              'rateService',
+              ParamType.String,
+            ),
+            cancel: params.getParam(
+              'cancel',
+              ParamType.String,
+            ),
+            viewDetails: params.getParam(
+              'viewDetails',
+              ParamType.String,
+            ),
+            home: params.getParam(
+              'home',
+              ParamType.String,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+            all: params.getParam(
+              'all',
+              ParamType.String,
+            ),
+            upcoming: params.getParam(
+              'upcoming',
+              ParamType.String,
+            ),
+            completed: params.getParam(
+              'completed',
+              ParamType.String,
+            ),
+            cancelled: params.getParam(
+              'cancelled',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: MyProjectsWidget.routeName,
+          path: MyProjectsWidget.routePath,
+          builder: (context, params) => MyProjectsWidget(
+            savedChecklist: params.getParam(
+              'savedChecklist',
+              ParamType.String,
+            ),
+            savedProject: params.getParam(
+              'savedProject',
+              ParamType.JSON,
+            ),
+            projectName: params.getParam(
+              'projectName',
+              ParamType.String,
+            ),
+            location: params.getParam(
+              'location',
+              ParamType.String,
+            ),
+            imageURL: params.getParam(
+              'imageURL',
+              ParamType.String,
+            ),
+            lastUpdated: params.getParam(
+              'lastUpdated',
+              ParamType.String,
+            ),
+            project: params.getParam(
+              'project',
+              ParamType.String,
+            ),
+            diy: params.getParam(
+              'diy',
+              ParamType.JSON,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: DiagnosisdetailsWidget.routeName,
+          path: DiagnosisdetailsWidget.routePath,
+          builder: (context, params) => DiagnosisdetailsWidget(
+            photoURL: params.getParam(
+              'photoURL',
+              ParamType.String,
+            ),
+            problemDescription: params.getParam(
+              'problemDescription',
+              ParamType.String,
+            ),
+            location: params.getParam(
+              'location',
+              ParamType.String,
+            ),
+            diagnosisResult: params.getParam(
+              'diagnosisResult',
+              ParamType.String,
+            ),
+            suggestedFix: params.getParam(
+              'suggestedFix',
+              ParamType.String,
+            ),
+            fixSteps: params.getParam(
+              'fixSteps',
+              ParamType.String,
+            ),
+            diagnoiseDetails: params.getParam(
+              'diagnoiseDetails',
+              ParamType.JSON,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: MyProjectGuidanceWidget.routeName,
+          path: MyProjectGuidanceWidget.routePath,
+          builder: (context, params) => MyProjectGuidanceWidget(
+            savedChecklist: params.getParam(
+              'savedChecklist',
+              ParamType.JSON,
+            ),
+            savedProject: params.getParam(
+              'savedProject',
+              ParamType.JSON,
+            ),
+            diyGuidance: params.getParam(
+              'diyGuidance',
+              ParamType.String,
+            ),
+            projectType: params.getParam(
+              'projectType',
+              ParamType.String,
+            ),
+            location: params.getParam(
+              'location',
+              ParamType.String,
+            ),
+            scope: params.getParam(
+              'scope',
+              ParamType.String,
+            ),
+            projectName: params.getParam(
+              'projectName',
+              ParamType.String,
+            ),
+            locationType: params.getParam(
+              'locationType',
+              ParamType.String,
+            ),
+            completionPercentage: params.getParam(
+              'completionPercentage',
+              ParamType.int,
+            ),
+            aiOnlineStatus: params.getParam(
+              'aiOnlineStatus',
+              ParamType.bool,
+            ),
+            aiConversation: params.getParam(
+              'aiConversation',
+              ParamType.String,
+            ),
+            userConversation: params.getParam(
+              'userConversation',
+              ParamType.String,
+            ),
+            statusColor: params.getParam(
+              'statusColor',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ProjectsummaryBuildWidget.routeName,
+          path: ProjectsummaryBuildWidget.routePath,
+          builder: (context, params) => ProjectsummaryBuildWidget(
+            projectName: params.getParam(
+              'projectName',
+              ParamType.String,
+            ),
+            describeProject: params.getParam(
+              'describeProject',
+              ParamType.String,
+            ),
+            estimatedBudget: params.getParam(
+              'estimatedBudget',
+              ParamType.String,
+            ),
+            howsoontobedone: params.getParam(
+              'howsoontobedone',
+              ParamType.String,
+            ),
+            zip: params.getParam(
+              'zip',
+              ParamType.String,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.String,
+            ),
+            aiDifficulty: params.getParam(
+              'aiDifficulty',
+              ParamType.String,
+            ),
+            aiTimeCommitment: params.getParam(
+              'aiTimeCommitment',
+              ParamType.String,
+            ),
+            aiProTips: params.getParam(
+              'aiProTips',
+              ParamType.String,
+            ),
+            aiConversation: params.getParam(
+              'aiConversation',
+              ParamType.String,
+            ),
+            userInput: params.getParam(
+              'userInput',
+              ParamType.String,
+            ),
+            savedChecklist: params.getParam(
+              'savedChecklist',
+              ParamType.JSON,
+            ),
+            savedProject: params.getParam(
+              'savedProject',
+              ParamType.JSON,
+            ),
+            projectSummary: params.getParam(
+              'projectSummary',
+              ParamType.JSON,
+            ),
+            navigate: params.getParam(
+              'navigate',
+              ParamType.LatLng,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: DiyguideWidget.routeName,
+          path: DiyguideWidget.routePath,
+          builder: (context, params) => DiyguideWidget(
+            documentFormat: params.getParam(
+              'documentFormat',
+              ParamType.String,
+            ),
+            generatedWhen: params.getParam(
+              'generatedWhen',
+              ParamType.String,
+            ),
+            pages: params.getParam(
+              'pages',
+              ParamType.String,
+            ),
+            projectName: params.getParam(
+              'projectName',
+              ParamType.String,
+            ),
+            diyGuide: params.getParam(
+              'diyGuide',
+              ParamType.String,
+            ),
+            diyPage: params.getParam(
+              'diyPage',
+              ParamType.JSON,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: FixFLowChatroomWidget.routeName,
+          path: FixFLowChatroomWidget.routePath,
+          builder: (context, params) => FixFLowChatroomWidget(
+            fixFLowChat: params.getParam(
+              'fixFLowChat',
+              ParamType.JSON,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: FalseErrorWidget.routeName,
+          path: FalseErrorWidget.routePath,
+          builder: (context, params) => FalseErrorWidget(),
+        ),
+        FFRoute(
+          name: CommunityProjectsWidget.routeName,
+          path: CommunityProjectsWidget.routePath,
+          builder: (context, params) => CommunityProjectsWidget(
+            fixflowCommonity: params.getParam(
+              'fixflowCommonity',
+              ParamType.JSON,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ProfilenewWidget.routeName,
+          path: ProfilenewWidget.routePath,
+          builder: (context, params) => ProfilenewWidget(),
+        ),
+        FFRoute(
+          name: FixFlowGPTWidget.routeName,
+          path: FixFlowGPTWidget.routePath,
+          builder: (context, params) => FixFlowGPTWidget(
+            fixflowgpt: params.getParam(
+              'fixflowgpt',
+              ParamType.JSON,
+            ),
+            userConversation: params.getParam(
+              'userConversation',
+              ParamType.String,
+            ),
+            aiConversation: params.getParam(
+              'aiConversation',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

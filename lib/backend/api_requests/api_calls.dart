@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
+import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -314,6 +315,24 @@ class FixFlowAIGroup {
   static DeleteUserSkillCall deleteUserSkillCall = DeleteUserSkillCall();
   static GetUserSkillIdCall getUserSkillIdCall = GetUserSkillIdCall();
   static PatchUserSkillIdCall patchUserSkillIdCall = PatchUserSkillIdCall();
+  static PatchUserSettingCall patchUserSettingCall = PatchUserSettingCall();
+  static GetUserSettingCall getUserSettingCall = GetUserSettingCall();
+  static PostQuickActionLogCall postQuickActionLogCall =
+      PostQuickActionLogCall();
+  static GetQuickActionLogCall getQuickActionLogCall = GetQuickActionLogCall();
+  static DeleteQuickActionLogCall deleteQuickActionLogCall =
+      DeleteQuickActionLogCall();
+  static QuickActionLogIDCall quickActionLogIDCall = QuickActionLogIDCall();
+  static PatchQuickActionLogIDCall patchQuickActionLogIDCall =
+      PatchQuickActionLogIDCall();
+  static FixflowBrainCall fixflowBrainCall = FixflowBrainCall();
+  static MySavedProjectsCall mySavedProjectsCall = MySavedProjectsCall();
+  static SavedChecklistCall savedChecklistCall = SavedChecklistCall();
+  static VerbalChatroomCall verbalChatroomCall = VerbalChatroomCall();
+  static StopTalkingCall stopTalkingCall = StopTalkingCall();
+  static SearchContractorCall searchContractorCall = SearchContractorCall();
+  static SubmitFeatureRequestCall submitFeatureRequestCall =
+      SubmitFeatureRequestCall();
 }
 
 class AdminActionCall {
@@ -1116,7 +1135,16 @@ class PatchContractorCertificationIdCall {
 }
 
 class ContractorProfileCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    String? email = '',
+    String? phone = '',
+    String? zip = '',
+    String? trade = '',
+    String? photo = '',
+    String? reviews = '',
+    String? rating = '',
+  }) async {
     final baseUrl = FixFlowAIGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
@@ -1124,7 +1152,16 @@ class ContractorProfileCall {
       apiUrl: '${baseUrl}/contractor_profile',
       callType: ApiCallType.GET,
       headers: {},
-      params: {},
+      params: {
+        'Name': name,
+        'email': email,
+        'phone': phone,
+        'zip': zip,
+        'trade': trade,
+        'photo': photo,
+        'reviews': reviews,
+        'rating': rating,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -1425,7 +1462,11 @@ class PatchContractorServicePackageIdCall {
 }
 
 class DiagnoseWithOpenAiCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    FFUploadedFile? upload,
+    String? text = '',
+    String? location = '',
+  }) async {
     final baseUrl = FixFlowAIGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
@@ -1433,8 +1474,12 @@ class DiagnoseWithOpenAiCall {
       apiUrl: '${baseUrl}/diagnose_with_openai',
       callType: ApiCallType.POST,
       headers: {},
-      params: {},
-      bodyType: BodyType.JSON,
+      params: {
+        'upload': upload,
+        'text': text,
+        'lacation': location,
+      },
+      bodyType: BodyType.MULTIPART,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -2795,6 +2840,12 @@ class NotificationCall {
       alwaysAllowBody: false,
     );
   }
+
+  List? notifications(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+        true,
+      ) as List?;
 }
 
 class PostNotificationCall {
@@ -3390,7 +3441,9 @@ class PatchProjectMaterialsIdCall {
 }
 
 class ProjectPlannedCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    String? userId = '',
+  }) async {
     final baseUrl = FixFlowAIGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
@@ -3398,7 +3451,9 @@ class ProjectPlannedCall {
       apiUrl: '${baseUrl}/project_planned',
       callType: ApiCallType.GET,
       headers: {},
-      params: {},
+      params: {
+        'user_id': userId,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -3716,15 +3771,35 @@ class ReportCall {
 }
 
 class PostReportCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    int? userId,
+    String? photoURL = '',
+    String? problemDescription = '',
+    String? location = '',
+    String? diagnosisResult = '',
+    String? suggestedFix = '',
+    String? fixSteps = '',
+  }) async {
     final baseUrl = FixFlowAIGroup.getBaseUrl();
 
+    final ffApiRequestBody = '''
+{
+  "user_id": 1,
+  "photoURL": "https://your-image.jpg",
+  "problemDescription": "Toilet leaking",
+  "location": "zip",
+  "diagnosisResult": "Worn seal",
+  "suggestedFix": "Replace wax ring",
+  "fixSteps": "Shut off water, remove toilet..."
+}
+''';
     return ApiManager.instance.makeApiCall(
       callName: 'Post report',
       apiUrl: '${baseUrl}/report',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -4613,6 +4688,313 @@ class PatchUserSkillIdCall {
   }
 }
 
+class PatchUserSettingCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Patch user setting',
+      apiUrl: '${baseUrl}/user_setting/{user_setting_id}',
+      callType: ApiCallType.PATCH,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetUserSettingCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get user setting',
+      apiUrl: '${baseUrl}/user_setting/{user_setting_id}',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class PostQuickActionLogCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Post Quick Action Log',
+      apiUrl: '${baseUrl}/quick_action_log',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetQuickActionLogCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'get quick action log',
+      apiUrl: '${baseUrl}/quick_action_log',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DeleteQuickActionLogCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Delete Quick Action Log',
+      apiUrl: '${baseUrl}/quick_action_log/{quick_action_log_id}',
+      callType: ApiCallType.DELETE,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class QuickActionLogIDCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Quick Action Log ID',
+      apiUrl: '${baseUrl}/quick_action_log/{quick_action_log_id}',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class PatchQuickActionLogIDCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Patch Quick Action Log ID',
+      apiUrl: '${baseUrl}/quick_action_log/{quick_action_log_id}',
+      callType: ApiCallType.PATCH,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class FixflowBrainCall {
+  Future<ApiCallResponse> call({
+    String? userId = '',
+    String? screenContext = '',
+    String? inputType = '',
+    String? inputValue = '',
+  }) async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "user_id": "demo_user_001",
+  "screen_context": "in_repair_assistance",
+  "input_type": "text",
+  "input_value": "How do I fix a leaking kitchen faucet?"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'fixflow brain',
+      apiUrl: '${baseUrl}/FixFlow_brain',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization':
+            'Bearer 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',
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class MySavedProjectsCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'My Saved Projects',
+      apiUrl: '${baseUrl}/My_Saved_Projects',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class SavedChecklistCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Saved Checklist',
+      apiUrl: '${baseUrl}/Saved_Checklist',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class VerbalChatroomCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Verbal Chatroom',
+      apiUrl: '${baseUrl}/verbal_chatroom',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class StopTalkingCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Stop Talking',
+      apiUrl: '${baseUrl}/Stop_Speaking',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class SearchContractorCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Search Contractor',
+      apiUrl: '${baseUrl}/Search_Contractor',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class SubmitFeatureRequestCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Submit Feature Request ',
+      apiUrl: '${baseUrl}/Submit_Feature_Request',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 /// End FixFlow AI Group Code
 
 /// Start Auth Group Code
@@ -4624,18 +5006,35 @@ class AuthGroup {
   static AuthLoginCall authLoginCall = AuthLoginCall();
   static AuthMeCall authMeCall = AuthMeCall();
   static AuthSignupCall authSignupCall = AuthSignupCall();
+  static ForgotPasswordCall forgotPasswordCall = ForgotPasswordCall();
+  static ChangePasswordCall changePasswordCall = ChangePasswordCall();
+  static UpdatePasswordCall updatePasswordCall = UpdatePasswordCall();
+  static DarkModeCall darkModeCall = DarkModeCall();
 }
 
 class AuthLoginCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    String? email = '',
+    String? password = '',
+  }) async {
     final baseUrl = AuthGroup.getBaseUrl();
 
+    final ffApiRequestBody = '''
+{
+  "email": "Accoffai@aohub.biz",
+  "password": "Live_Dre08\$\$"
+}
+''';
     return ApiManager.instance.makeApiCall(
       callName: 'Auth Login ',
       apiUrl: '${baseUrl}/auth/login',
       callType: ApiCallType.POST,
-      headers: {},
+      headers: {
+        '{   Authorization':
+            'Bearer eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiemlwIjoiREVGIn0.YgTs6RHPlVgI99vd34whSe-6MDtjBAWK1O3sXuixTkLzDRUbyX4DCq38jXRj7GSiyB6qGy1QPAi7USFHGbdyBRUWU0HtIcTp.9aQsQRl4KGB2wWL6WrCMsQ.ihPAQhi7Hu9obWa5rCYnGpEzBE1H0FftNDenUqJXdxDBUub7CmEIfwqyrMrdFUgi1EoFS9o6ZKAhNFrDcWr8LsA78CWFw-20PW4NbbGhA6IUW74PBDXkZ9F3ExFyyG0n3lbKVTHycIL68SIp45F9qw.e_SAXhe9gfjmh2awbjL914Bo2vAjgblqn21TgDpHDDQ }',
+      },
       params: {},
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -4668,15 +5067,149 @@ class AuthMeCall {
 }
 
 class AuthSignupCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    String? email = '',
+    String? password = '',
+    String? location = '',
+  }) async {
     final baseUrl = AuthGroup.getBaseUrl();
 
+    final ffApiRequestBody = '''
+{
+  "name": "Andre Barnes",
+  "email": "acc.offai@aohub.biz",
+  "password": "Live_Dre08\$\$",
+  "location": "Columbia, SC",
+  "user_type": "homeowner",
+  "first_use_data": "none",
+  "purchase_history": "none",
+  "is_background_checked": false,
+  "id_scan_url": "",
+  "real_time_photo_url": "",
+  "verification_status": "pending",
+  "level": "new",
+  "referred_by_user_id": null,
+  "affiliate_source_id": null,
+  "group_id": null
+}
+''';
     return ApiManager.instance.makeApiCall(
       callName: 'Auth signup',
       apiUrl: '${baseUrl}/auth/signup',
       callType: ApiCallType.POST,
+      headers: {
+        '{   Authorization':
+            'Bearer eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiemlwIjoiREVGIn0._16Om0nCnrTGTIIhzWvaC_VRB7eAZ8NmvvrKMnYfXRPX9GZN8aR5J4R08_mw64ksa4dZJhP2G2WV8_eSlAVMZWkle9sI8Jb4.6dHFytURW2yhLyRM6EKQlw.-5i8dohhAwQrtFBjUHnt3bosCU6v_d3QWI97Nl1_uAeovcq5w6j9HA-sBrXRpk-hgMTviLx0gMs257uTBz91cFC7j3OlQRkfOHH1Jmj4aGBIrwjN-FLACalGtBo44wLhr7mlDRoKAcT8Trn5qEWLcA.khlU0hogU5XB34tHl4BXrvnY3rnqYO-mAg3M4h5HkHM }',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ForgotPasswordCall {
+  Future<ApiCallResponse> call({
+    String? email = '',
+  }) async {
+    final baseUrl = AuthGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "email": "user@example.com"
+}
+''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'ForgotPassword',
+      apiUrl: '${baseUrl}/forgot_password',
+      callType: ApiCallType.POST,
       headers: {},
       params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ChangePasswordCall {
+  Future<ApiCallResponse> call({
+    String? oldPassword = '',
+    String? newPassword = '',
+    String? userId = '',
+  }) async {
+    final baseUrl = AuthGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "old_password": "<yourOldPasswordInput>",
+  "new_password": "<yourNewPasswordInput>",
+  "user_id": "<yourUserIDVariable>"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'changePassword',
+      apiUrl: '${baseUrl}/Change_Password',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class UpdatePasswordCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = AuthGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Update Password',
+      apiUrl: '${baseUrl}/update_email',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DarkModeCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = AuthGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'dark mode',
+      apiUrl: '${baseUrl}/toggle_dark_mode',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -4770,4 +5303,15 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
     }
     return isList ? '[]' : '{}';
   }
+}
+
+String? escapeStringForJson(String? input) {
+  if (input == null) {
+    return null;
+  }
+  return input
+      .replaceAll('\\', '\\\\')
+      .replaceAll('"', '\\"')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t');
 }
