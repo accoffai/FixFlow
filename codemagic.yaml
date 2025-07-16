@@ -2,7 +2,7 @@ workflows:
   build-fixflow:
     name: FixFlow Android + iOS Build
     environment:
-      flutter: "3.22.1"
+      flutter: "3.22.2"
       vars:
         OPENAI_API_KEY: $Open_API_Key
         XANO_BASE_URL: $xano_base_url
