@@ -1189,7 +1189,8 @@ class PostContractorProfileCall {
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
-    );
+    );cd "C:\Users\dreho\Downloads\fix_flow_a_i (2)"
+
   }
 }
 
@@ -4852,8 +4853,7 @@ class FixflowBrainCall {
       apiUrl: '${baseUrl}/FixFlow_brain',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization':
-            'Bearer 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',
+        'Authorization': 'Bearer ${const String.fromEnvironment("OPENAI_API_KEY")}',
         'Content-Type': 'application/json',
       },
       params: {},
