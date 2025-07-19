@@ -1,10 +1,8 @@
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -78,6 +76,11 @@ class FindContractorWidget extends StatefulWidget {
     required this.image,
     required this.findContractor,
     required this.gps,
+    required this.projectType,
+    required this.timeline,
+    required this.budget,
+    required this.zip,
+    required this.userContractorPreference,
   });
 
   final String? name;
@@ -87,6 +90,11 @@ class FindContractorWidget extends StatefulWidget {
   final String? image;
   final dynamic findContractor;
   final LatLng? gps;
+  final String? projectType;
+  final String? timeline;
+  final int? budget;
+  final String? zip;
+  final String? userContractorPreference;
 
   static String routeName = 'FindContractor';
   static String routePath = '/findContractor';
@@ -123,7 +131,11 @@ class _FindContractorWidgetState extends State<FindContractorWidget> {
       }
     });
 
-    _model.textController ??= TextEditingController();
+    _model.textController ??= TextEditingController(
+        text: valueOrDefault<String>(
+      widget.userContractorPreference,
+      'Search',
+    ));
     _model.textFieldFocusNode ??= FocusNode();
   }
 
@@ -207,10 +219,10 @@ class _FindContractorWidgetState extends State<FindContractorWidget> {
                 onPressed: () async {
                   _model.apiResultr0h =
                       await FixFlowAIGroup.fixflowBrainCall.call(
-                    userId: widget.findContractor?.toString(),
-                    inputType: widget.findContractor?.toString(),
-                    screenContext: widget.findContractor?.toString(),
-                    inputValue: widget.findContractor?.toString(),
+                    userId: widget.userContractorPreference,
+                    inputType: widget.userContractorPreference,
+                    screenContext: widget.userContractorPreference,
+                    inputValue: widget.userContractorPreference,
                   );
 
                   await FixFlowAIGroup.searchContractorCall.call();
@@ -292,7 +304,7 @@ class _FindContractorWidgetState extends State<FindContractorWidget> {
                                 ),
                           ),
                           Text(
-                            'Browse trusted local professionals for your project.',
+                            '\"Describe the type of contractor or service you need, along with budget, timeline, and ZIP code.\"\n',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -317,269 +329,114 @@ class _FindContractorWidgetState extends State<FindContractorWidget> {
                           ),
                         ].divide(SizedBox(height: 8.0)),
                       ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
+                      ListView(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
                         children: [
-                          Row(
+                          Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Expanded(
-                                child: FlutterFlowDropDown<String>(
-                                  controller:
-                                      _model.dropDownValueController1 ??=
-                                          FormFieldController<String>(
-                                    _model.dropDownValue1 ??= '',
-                                  ),
-                                  options: List<String>.from([
-                                    'plumbing',
-                                    'electrical',
-                                    'carpentry',
-                                    'general',
-                                    'other'
-                                  ]),
-                                  optionLabels: [
-                                    'Plumbing',
-                                    'Electrical',
-                                    'Carpentry',
-                                    'General',
-                                    'Other'
-                                  ],
-                                  onChanged: (val) async {
-                                    safeSetState(
-                                        () => _model.dropDownValue1 = val);
-                                    _model.apiResultr5i = await FixFlowAIGroup
-                                        .fixflowBrainCall
-                                        .call();
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _model.textController,
+                                      focusNode: _model.textFieldFocusNode,
+                                      onFieldSubmitted: (_) async {
+                                        _model.apiResultxgg =
+                                            await FixFlowAIGroup
+                                                .fixflowBrainCall
+                                                .call();
 
-                                    if (!(_model.apiResultr5i?.succeeded ??
-                                        true)) {
-                                      context.pushNamed(
-                                          FalseErrorWidget.routeName);
-                                    }
+                                        if (!(_model.apiResultxgg?.succeeded ??
+                                            true)) {
+                                          context.pushNamed(
+                                              FalseErrorWidget.routeName);
+                                        }
 
-                                    safeSetState(() {});
-                                  },
-                                  width: 100.0,
-                                  height: 40.0,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                        safeSetState(() {});
+                                      },
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'ZIP Code',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              color: Colors.white,
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFF00CFFF),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                        color: Colors.white,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  hintText: 'Project Type',
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: Color(0xFF00CFFF),
-                                    size: 20.0,
-                                  ),
-                                  fillColor: Color(0xFF2C2C2E),
-                                  elevation: 0.0,
-                                  borderColor: Color(0xFF00CFFF),
-                                  borderWidth: 1.0,
-                                  borderRadius: 8.0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  hidesUnderline: true,
-                                  isSearchable: false,
-                                  isMultiSelect: false,
-                                ),
-                              ),
-                              Expanded(
-                                child: FlutterFlowDropDown<String>(
-                                  controller:
-                                      _model.dropDownValueController2 ??=
-                                          FormFieldController<String>(
-                                    _model.dropDownValue2 ??= '',
-                                  ),
-                                  options: List<String>.from(
-                                      ['under_100', '100_500', 'over_500']),
-                                  optionLabels: [
-                                    'Under \$100',
-                                    '\$100-\$500',
-                                    '\$500+'
-                                  ],
-                                  onChanged: (val) async {
-                                    safeSetState(
-                                        () => _model.dropDownValue2 = val);
-                                    _model.apiResultz9w = await FixFlowAIGroup
-                                        .fixflowBrainCall
-                                        .call(
-                                      userId: '',
-                                      screenContext: '',
-                                      inputType: '',
-                                      inputValue: '',
-                                    );
-
-                                    if (!(_model.apiResultz9w?.succeeded ??
-                                        true)) {
-                                      context.pushNamed(
-                                          FalseErrorWidget.routeName);
-                                    }
-
-                                    safeSetState(() {});
-                                  },
-                                  width: 100.0,
-                                  height: 40.0,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFF00CFFF),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                        color: Colors.white,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  hintText: 'Budget',
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: Color(0xFF00CFFF),
-                                    size: 20.0,
-                                  ),
-                                  fillColor: Color(0xFF2C2C2E),
-                                  elevation: 0.0,
-                                  borderColor: Color(0xFF00CFFF),
-                                  borderWidth: 1.0,
-                                  borderRadius: 8.0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  hidesUnderline: true,
-                                  isSearchable: false,
-                                  isMultiSelect: false,
-                                ),
-                              ),
-                            ].divide(SizedBox(width: 12.0)),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: FlutterFlowDropDown<String>(
-                                  controller:
-                                      _model.dropDownValueController3 ??=
-                                          FormFieldController<String>(
-                                    _model.dropDownValue3 ??= '',
-                                  ),
-                                  options: List<String>.from(
-                                      ['asap', 'this_week', 'this_month']),
-                                  optionLabels: [
-                                    'ASAP',
-                                    'This Week',
-                                    'This Month'
-                                  ],
-                                  onChanged: (val) async {
-                                    safeSetState(
-                                        () => _model.dropDownValue3 = val);
-                                    _model.apiResultfr3 = await FixFlowAIGroup
-                                        .fixflowBrainCall
-                                        .call();
-
-                                    if (!(_model.apiResultfr3?.succeeded ??
-                                        true)) {
-                                      context.pushNamed(
-                                          FalseErrorWidget.routeName);
-                                    }
-
-                                    safeSetState(() {});
-                                  },
-                                  width: 100.0,
-                                  height: 40.0,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                        color: Colors.white,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: Color(0xFF2C2C2E),
                                       ),
-                                  hintText: 'Timeline',
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: Color(0xFF00CFFF),
-                                    size: 20.0,
-                                  ),
-                                  fillColor: Color(0xFF2C2C2E),
-                                  elevation: 0.0,
-                                  borderColor: Color(0xFF00CFFF),
-                                  borderWidth: 1.0,
-                                  borderRadius: 8.0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  hidesUnderline: true,
-                                  isSearchable: false,
-                                  isMultiSelect: false,
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _model.textController,
-                                  focusNode: _model.textFieldFocusNode,
-                                  onFieldSubmitted: (_) async {
-                                    _model.apiResultxgg = await FixFlowAIGroup
-                                        .fixflowBrainCall
-                                        .call();
-
-                                    if (!(_model.apiResultxgg?.succeeded ??
-                                        true)) {
-                                      context.pushNamed(
-                                          FalseErrorWidget.routeName);
-                                    }
-
-                                    safeSetState(() {});
-                                  },
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: 'ZIP Code',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: Colors.white,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -589,80 +446,16 @@ class _FindContractorWidgetState extends State<FindContractorWidget> {
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                          color: Colors.white,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFF00CFFF),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      keyboardType: TextInputType.number,
+                                      validator: _model.textControllerValidator
+                                          .asValidator(context),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFF00CFFF),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    filled: true,
-                                    fillColor: Color(0xFF2C2C2E),
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Colors.white,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  keyboardType: TextInputType.number,
-                                  validator: _model.textControllerValidator
-                                      .asValidator(context),
-                                ),
+                                ].divide(SizedBox(width: 12.0)),
                               ),
-                            ].divide(SizedBox(width: 12.0)),
+                            ].divide(SizedBox(height: 12.0)),
                           ),
-                        ].divide(SizedBox(height: 12.0)),
+                        ],
                       ),
                     ]
                         .divide(SizedBox(height: 24.0))

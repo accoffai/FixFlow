@@ -107,6 +107,13 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
             begin: 0.0,
             end: 1.0,
           ),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 1800.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
         ],
       ),
       'buttonOnPageLoadAnimation1': AnimationInfo(
@@ -126,6 +133,13 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
             begin: 0.0,
             end: 1.0,
           ),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 1800.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
         ],
       ),
       'buttonOnPageLoadAnimation2': AnimationInfo(
@@ -141,6 +155,13 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
           FadeEffect(
             curve: Curves.easeOut,
             delay: 600.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 1800.0.ms,
             duration: 600.0.ms,
             begin: 0.0,
             end: 1.0,

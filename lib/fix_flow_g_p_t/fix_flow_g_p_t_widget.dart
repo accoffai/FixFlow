@@ -69,14 +69,22 @@ class FixFlowGPTWidget extends StatefulWidget {
     super.key,
     required this.fixflowgpt,
     required this.userConversation,
-    required this.aiConversation,
+    required this.fixflowAssistant,
     this.gps,
+    required this.conversationList,
+    required this.inputMessageText,
+    this.conversation,
+    this.conversationflow,
   });
 
   final dynamic fixflowgpt;
   final String? userConversation;
-  final String? aiConversation;
+  final String? fixflowAssistant;
   final LatLng? gps;
+  final dynamic conversationList;
+  final String? inputMessageText;
+  final int? conversation;
+  final String? conversationflow;
 
   static String routeName = 'FixFlowGPT';
   static String routePath = '/fixFlowGPT';
@@ -115,8 +123,8 @@ class _FixFlowGPTWidgetState extends State<FixFlowGPTWidget> {
 
     _model.textController ??= TextEditingController(
         text: valueOrDefault<String>(
-      widget.userConversation,
-      'Ask anything...',
+      widget.inputMessageText,
+      'Ask Anything...',
     ));
     _model.textFieldFocusNode ??= FocusNode();
   }
@@ -252,180 +260,43 @@ class _FixFlowGPTWidgetState extends State<FixFlowGPTWidget> {
                 ),
               ),
               Expanded(
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    final selectedMedia =
-                        await selectMediaWithSourceBottomSheet(
-                      context: context,
-                      allowPhoto: true,
-                    );
-                    if (selectedMedia != null &&
-                        selectedMedia.every((m) =>
-                            validateFileFormat(m.storagePath, context))) {
-                      safeSetState(
-                          () => _model.isDataUploading_uploadDataMrk = true);
-                      var selectedUploadedFiles = <FFUploadedFile>[];
+                child: Builder(
+                  builder: (context) {
+                    final conversation = widget.conversationList!.toList();
 
-                      try {
-                        selectedUploadedFiles = selectedMedia
-                            .map((m) => FFUploadedFile(
-                                  name: m.storagePath.split('/').last,
-                                  bytes: m.bytes,
-                                  height: m.dimensions?.height,
-                                  width: m.dimensions?.width,
-                                  blurHash: m.blurHash,
-                                ))
-                            .toList();
-                      } finally {
-                        _model.isDataUploading_uploadDataMrk = false;
-                      }
-                      if (selectedUploadedFiles.length ==
-                          selectedMedia.length) {
-                        safeSetState(() {
-                          _model.uploadedLocalFile_uploadDataMrk =
-                              selectedUploadedFiles.first;
-                        });
-                      } else {
+                    return InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        _model.apiResultn49 =
+                            await FixFlowAIGroup.messageCall.call();
+
+                        if (!(_model.apiResultn49?.succeeded ?? true)) {
+                          context.pushNamed(FalseErrorWidget.routeName);
+                        }
+
                         safeSetState(() {});
-                        return;
-                      }
-                    }
-
-                    _model.apiResult3ca =
-                        await FixFlowAIGroup.fixflowBrainCall.call();
-
-                    if (!(_model.apiResult3ca?.succeeded ?? true)) {
-                      context.pushNamed(FalseErrorWidget.routeName);
-                    }
-
-                    safeSetState(() {});
-                  },
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF333333),
-                        ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            width: 100.0,
-                            height: 100.0,
+                      },
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: conversation.length,
+                        itemBuilder: (context, conversationIndex) {
+                          final conversationItem =
+                              conversation[conversationIndex];
+                          return Container(
+                            width: double.infinity,
                             decoration: BoxDecoration(
-                              color: Color(0xFF1C1C1E),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20.0),
-                                bottomRight: Radius.circular(20.0),
-                                topLeft: Radius.circular(20.0),
-                                topRight: Radius.circular(20.0),
-                              ),
-                              shape: BoxShape.rectangle,
+                              color: Color(0xFF333333),
                             ),
-                            alignment: AlignmentDirectional(-1.0, -1.0),
-                            child: Text(
-                              valueOrDefault<String>(
-                                widget.aiConversation,
-                                'FixFlow',
-                              ),
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    color: Color(0xFFFBFEFF),
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                            ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Container(
-                                  width: 100.0,
-                                  height: 100.0,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFFF5C00),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(20.0),
-                                      bottomRight: Radius.circular(20.0),
-                                      topLeft: Radius.circular(20.0),
-                                      topRight: Radius.circular(20.0),
-                                    ),
-                                    shape: BoxShape.rectangle,
-                                  ),
-                                  alignment: AlignmentDirectional(-1.0, -1.0),
-                                  child: Text(
-                                    valueOrDefault<String>(
-                                      widget.userConversation,
-                                      'User Conversation',
-                                    ),
-                                    textAlign: TextAlign.end,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          color: Color(0xFFFBFEFF),
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
               Container(
@@ -502,13 +373,30 @@ class _FixFlowGPTWidgetState extends State<FixFlowGPTWidget> {
                         child: TextFormField(
                           controller: _model.textController,
                           focusNode: _model.textFieldFocusNode,
+                          onFieldSubmitted: (_) async {
+                            _model.apiResultido =
+                                await FixFlowAIGroup.messageCall.call(
+                              inputMessageText: widget.inputMessageText,
+                            );
+
+                            if ((_model.apiResultido?.succeeded ?? true)) {
+                              safeSetState(() {
+                                _model.textController?.text =
+                                    valueOrDefault<String>(
+                                  widget.inputMessageText,
+                                  'Ask Anything...',
+                                );
+                              });
+                            } else {
+                              context.pushNamed(FalseErrorWidget.routeName);
+                            }
+
+                            safeSetState(() {});
+                          },
                           autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: valueOrDefault<String>(
-                              widget.userConversation,
-                              'Ask anything...',
-                            ),
+                            labelText: widget.inputMessageText,
                             hintStyle: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -586,24 +474,53 @@ class _FixFlowGPTWidgetState extends State<FixFlowGPTWidget> {
                               .asValidator(context),
                         ),
                       ),
-                      FlutterFlowIconButton(
-                        borderRadius: 23.0,
-                        buttonSize: 46.0,
-                        fillColor: Color(0xFFFF6600),
-                        icon: Icon(
-                          Icons.send,
-                          color: Colors.white,
-                          size: 24.0,
+                      FutureBuilder<ApiCallResponse>(
+                        future: FixFlowAIGroup.messageCall.call(
+                          receiverId: widget.conversation,
+                          messageText: widget.conversationflow,
                         ),
-                        onPressed: () async {
-                          _model.apiResultqj4 =
-                              await FixFlowAIGroup.fixflowBrainCall.call();
-
-                          if (!(_model.apiResultqj4?.succeeded ?? true)) {
-                            context.pushNamed(FalseErrorWidget.routeName);
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                ),
+                              ),
+                            );
                           }
+                          final iconButtonMessageResponse = snapshot.data!;
 
-                          safeSetState(() {});
+                          return FlutterFlowIconButton(
+                            borderRadius: 23.0,
+                            buttonSize: 46.0,
+                            fillColor: Color(0xFFFF6600),
+                            icon: Icon(
+                              Icons.send,
+                              color: Colors.white,
+                              size: 24.0,
+                            ),
+                            onPressed: () async {
+                              _model.apiResultqj4 =
+                                  await FixFlowAIGroup.fixflowBrainCall.call(
+                                inputType: widget.userConversation,
+                                inputValue: widget.userConversation,
+                              );
+
+                              await FixFlowAIGroup.messageCall.call();
+
+                              if (!(_model.apiResultqj4?.succeeded ?? true)) {
+                                context.pushNamed(FalseErrorWidget.routeName);
+                              }
+
+                              safeSetState(() {});
+                            },
+                          );
                         },
                       ),
                     ].divide(SizedBox(width: 12.0)),

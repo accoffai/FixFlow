@@ -164,227 +164,107 @@ class _DiagnosisdetailsWidgetState extends State<DiagnosisdetailsWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            children: [
+              ListView(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 250.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 8.0,
-                          color: Color(0x33000000),
-                          offset: Offset(
-                            0.0,
-                            2.0,
-                          ),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        final selectedMedia =
-                            await selectMediaWithSourceBottomSheet(
-                          context: context,
-                          allowPhoto: true,
-                        );
-                        if (selectedMedia != null &&
-                            selectedMedia.every((m) =>
-                                validateFileFormat(m.storagePath, context))) {
-                          safeSetState(() =>
-                              _model.isDataUploading_uploadDataLbm = true);
-                          var selectedUploadedFiles = <FFUploadedFile>[];
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Builder(
+                      builder: (context) {
+                        final dianosisDetails =
+                            widget.diagnoiseDetails!.toList();
 
-                          try {
-                            selectedUploadedFiles = selectedMedia
-                                .map((m) => FFUploadedFile(
-                                      name: m.storagePath.split('/').last,
-                                      bytes: m.bytes,
-                                      height: m.dimensions?.height,
-                                      width: m.dimensions?.width,
-                                      blurHash: m.blurHash,
-                                    ))
-                                .toList();
-                          } finally {
-                            _model.isDataUploading_uploadDataLbm = false;
-                          }
-                          if (selectedUploadedFiles.length ==
-                              selectedMedia.length) {
-                            safeSetState(() {
-                              _model.uploadedLocalFile_uploadDataLbm =
-                                  selectedUploadedFiles.first;
-                            });
-                          } else {
-                            safeSetState(() {});
-                            return;
-                          }
-                        }
-
-                        _model.apiResult48a =
-                            await FixFlowAIGroup.fixflowBrainCall.call();
-
-                        if (!(_model.apiResult48a?.succeeded ?? true)) {
-                          context.pushNamed(FalseErrorWidget.routeName);
-                        }
-
-                        safeSetState(() {});
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: Image.network(
-                          widget.photoURL!,
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    elevation: 2.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Text(
-                              'Issue Description',
-                              style: FlutterFlowTheme.of(context)
-                                  .titleMedium
-                                  .override(
-                                    font: GoogleFonts.interTight(
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
+                        return Wrap(
+                          spacing: 0.0,
+                          runSpacing: 0.0,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: List.generate(dianosisDetails.length,
+                              (dianosisDetailsIndex) {
+                            final dianosisDetailsItem =
+                                dianosisDetails[dianosisDetailsIndex];
+                            return Container(
+                              width: double.infinity,
+                              height: 250.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 8.0,
+                                    color: Color(0x33000000),
+                                    offset: Offset(
+                                      0.0,
+                                      2.0,
                                     ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleMedium
-                                        .fontStyle,
-                                  ),
-                            ),
-                          ),
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              _model.apiResult7bp =
-                                  await FixFlowAIGroup.fixflowBrainCall.call(
-                                userId: '',
-                                screenContext: '',
-                                inputType: '',
-                                inputValue: '',
-                              );
-
-                              if (!(_model.apiResult7bp?.succeeded ?? true)) {
-                                context.pushNamed(FalseErrorWidget.routeName);
-                              }
-
-                              safeSetState(() {});
-                            },
-                            child: Text(
-                              valueOrDefault<String>(
-                                widget.problemDescription,
-                                'issue',
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(12.0),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                    lineHeight: 1.4,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    elevation: 2.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Text(
-                              'Detected Location',
-                              style: FlutterFlowTheme.of(context)
-                                  .titleMedium
-                                  .override(
-                                    font: GoogleFonts.interTight(
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleMedium
-                                        .fontStyle,
-                                  ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                color: FlutterFlowTheme.of(context).primary,
-                                size: 20.0,
-                              ),
-                              InkWell(
+                              child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  _model.apiResultvyf = await FixFlowAIGroup
+                                  final selectedMedia =
+                                      await selectMediaWithSourceBottomSheet(
+                                    context: context,
+                                    allowPhoto: true,
+                                  );
+                                  if (selectedMedia != null &&
+                                      selectedMedia.every((m) =>
+                                          validateFileFormat(
+                                              m.storagePath, context))) {
+                                    safeSetState(() => _model
+                                        .isDataUploading_uploadDataLbm = true);
+                                    var selectedUploadedFiles =
+                                        <FFUploadedFile>[];
+
+                                    try {
+                                      selectedUploadedFiles = selectedMedia
+                                          .map((m) => FFUploadedFile(
+                                                name: m.storagePath
+                                                    .split('/')
+                                                    .last,
+                                                bytes: m.bytes,
+                                                height: m.dimensions?.height,
+                                                width: m.dimensions?.width,
+                                                blurHash: m.blurHash,
+                                              ))
+                                          .toList();
+                                    } finally {
+                                      _model.isDataUploading_uploadDataLbm =
+                                          false;
+                                    }
+                                    if (selectedUploadedFiles.length ==
+                                        selectedMedia.length) {
+                                      safeSetState(() {
+                                        _model.uploadedLocalFile_uploadDataLbm =
+                                            selectedUploadedFiles.first;
+                                      });
+                                    } else {
+                                      safeSetState(() {});
+                                      return;
+                                    }
+                                  }
+
+                                  _model.apiResult48a = await FixFlowAIGroup
                                       .fixflowBrainCall
                                       .call();
 
-                                  if (!(_model.apiResultvyf?.succeeded ??
+                                  if (!(_model.apiResult48a?.succeeded ??
                                       true)) {
                                     context
                                         .pushNamed(FalseErrorWidget.routeName);
@@ -392,357 +272,105 @@ class _DiagnosisdetailsWidgetState extends State<DiagnosisdetailsWidget> {
 
                                   safeSetState(() {});
                                 },
-                                child: Text(
-                                  valueOrDefault<String>(
-                                    widget.location,
-                                    'location',
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  child: Image.network(
+                                    widget.photoURL!,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
                                 ),
                               ),
-                            ].divide(SizedBox(width: 8.0)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    elevation: 2.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.medical_services,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 24.0,
-                                ),
-                                Text(
-                                  'Diagnosis Result',
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .override(
-                                        font: GoogleFonts.interTight(
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ].divide(SizedBox(width: 8.0)),
-                            ),
-                          ),
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              _model.apiResultfgu =
-                                  await FixFlowAIGroup.fixflowBrainCall.call();
-
-                              if (!(_model.apiResultfgu?.succeeded ?? true)) {
-                                context.pushNamed(FalseErrorWidget.routeName);
-                              }
-
-                              safeSetState(() {});
-                            },
-                            child: Text(
-                              valueOrDefault<String>(
-                                widget.diagnosisResult,
-                                'results',
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                    lineHeight: 1.4,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    elevation: 2.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 12.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.build_circle,
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  size: 24.0,
-                                ),
-                                Text(
-                                  'Suggested Fix',
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .override(
-                                        font: GoogleFonts.interTight(
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondary,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ].divide(SizedBox(width: 8.0)),
-                            ),
-                          ),
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              _model.apiResultfgr =
-                                  await FixFlowAIGroup.fixflowBrainCall.call();
-
-                              if (!(_model.apiResultfgr?.succeeded ?? true)) {
-                                context.pushNamed(FalseErrorWidget.routeName);
-                              }
-
-                              safeSetState(() {});
-                            },
-                            child: Text(
-                              valueOrDefault<String>(
-                                widget.suggestedFix,
-                                'solution ',
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                    lineHeight: 1.4,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    elevation: 2.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 12.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.list_alt,
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                  size: 24.0,
-                                ),
-                                Text(
-                                  'Fix Steps',
-                                  style: FlutterFlowTheme.of(context)
-                                      .titleMedium
-                                      .override(
-                                        font: GoogleFonts.interTight(
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiary,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ].divide(SizedBox(width: 8.0)),
-                            ),
-                          ),
-                          Text(
-                            valueOrDefault<String>(
-                              widget.fixSteps,
-                              'DIY',
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                  lineHeight: 1.4,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            context.pushNamed(
-                              FindContractorWidget.routeName,
-                              queryParameters: {
-                                'name': serializeParam(
-                                  (_model.apiResultfgr?.jsonBody ?? '')
-                                      .toString(),
-                                  ParamType.String,
-                                ),
-                                'trade': serializeParam(
-                                  widget.diagnoiseDetails?.toString(),
-                                  ParamType.String,
-                                ),
-                                'rating': serializeParam(
-                                  widget.diagnoiseDetails?.toString(),
-                                  ParamType.String,
-                                ),
-                                'reviews': serializeParam(
-                                  widget.diagnoiseDetails?.toString(),
-                                  ParamType.String,
-                                ),
-                                'image': serializeParam(
-                                  widget.diagnoiseDetails?.toString(),
-                                  ParamType.String,
-                                ),
-                                'findContractor': serializeParam(
-                                  widget.diagnoiseDetails,
-                                  ParamType.JSON,
-                                ),
-                                'gps': serializeParam(
-                                  widget.gps,
-                                  ParamType.LatLng,
-                                ),
-                              }.withoutNulls,
                             );
+                          }),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                width: 100.0,
+                height: 100.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    FFButtonWidget(
+                      onPressed: () async {
+                        context.pushNamed(
+                          FindContractorWidget.routeName,
+                          queryParameters: {
+                            'name': serializeParam(
+                              (_model.apiResultfgr?.jsonBody ?? '').toString(),
+                              ParamType.String,
+                            ),
+                            'trade': serializeParam(
+                              widget.diagnoiseDetails?.toString(),
+                              ParamType.String,
+                            ),
+                            'rating': serializeParam(
+                              widget.diagnoiseDetails?.toString(),
+                              ParamType.String,
+                            ),
+                            'reviews': serializeParam(
+                              widget.diagnoiseDetails?.toString(),
+                              ParamType.String,
+                            ),
+                            'image': serializeParam(
+                              widget.diagnoiseDetails?.toString(),
+                              ParamType.String,
+                            ),
+                            'findContractor': serializeParam(
+                              widget.diagnoiseDetails,
+                              ParamType.JSON,
+                            ),
+                            'gps': serializeParam(
+                              widget.gps,
+                              ParamType.LatLng,
+                            ),
+                            'projectType': serializeParam(
+                              '',
+                              ParamType.String,
+                            ),
+                            'timeline': serializeParam(
+                              '',
+                              ParamType.String,
+                            ),
+                            'budget': serializeParam(
+                              0,
+                              ParamType.int,
+                            ),
+                            'zip': serializeParam(
+                              '',
+                              ParamType.String,
+                            ),
+                            'userContractorPreference': serializeParam(
+                              widget.diagnoiseDetails?.toString(),
+                              ParamType.String,
+                            ),
+                          }.withoutNulls,
+                        );
 
-                            await FixFlowAIGroup.fixflowBrainCall.call();
+                        await FixFlowAIGroup.fixflowBrainCall.call();
 
-                            if (!(_model.apiResultfgr?.jsonBody ?? '')) {
-                              context.pushNamed(FalseErrorWidget.routeName);
-                            }
-                          },
-                          text: 'Get Professional Help',
-                          options: FFButtonOptions(
-                            height: 48.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
+                        if (!(_model.apiResultfgr?.jsonBody ?? '')) {
+                          context.pushNamed(FalseErrorWidget.routeName);
+                        }
+                      },
+                      text: 'Get Professional Help',
+                      options: FFButtonOptions(
+                        height: 48.0,
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
                                   font: GoogleFonts.interTight(
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .titleSmall
@@ -760,40 +388,46 @@ class _DiagnosisdetailsWidgetState extends State<DiagnosisdetailsWidget> {
                                       .titleSmall
                                       .fontStyle,
                                 ),
-                            elevation: 0.0,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
+                        elevation: 0.0,
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      Expanded(
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            _model.apiResultvpz =
-                                await FixFlowAIGroup.postReportCall.call();
+                    ),
+                    Expanded(
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          _model.apiResultvpz =
+                              await FixFlowAIGroup.postReportCall.call();
 
-                            await FixFlowAIGroup.fixflowBrainCall.call();
+                          await FixFlowAIGroup.fixflowBrainCall.call();
 
-                            await FixFlowAIGroup.mySavedProjectsCall.call();
+                          await FixFlowAIGroup.mySavedProjectsCall.call();
 
-                            if (!(_model.apiResultvpz?.succeeded ?? true)) {
-                              context.pushNamed(FalseErrorWidget.routeName);
-                            }
+                          if (!(_model.apiResultvpz?.succeeded ?? true)) {
+                            context.pushNamed(FalseErrorWidget.routeName);
+                          }
 
-                            safeSetState(() {});
-                          },
-                          text: 'Save Report',
-                          options: FFButtonOptions(
-                            height: 48.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  font: GoogleFonts.interTight(
+                          safeSetState(() {});
+                        },
+                        text: 'Save Report',
+                        options: FFButtonOptions(
+                          height: 48.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 0.0, 16.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    font: GoogleFonts.interTight(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    letterSpacing: 0.0,
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .fontWeight,
@@ -801,29 +435,19 @@ class _DiagnosisdetailsWidgetState extends State<DiagnosisdetailsWidget> {
                                         .titleSmall
                                         .fontStyle,
                                   ),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
-                                ),
-                            elevation: 0.0,
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primary,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
+                          elevation: 0.0,
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primary,
+                            width: 2.0,
                           ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                    ].divide(SizedBox(width: 12.0)),
-                  ),
-                ].divide(SizedBox(height: 16.0)),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

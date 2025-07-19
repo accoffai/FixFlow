@@ -11,12 +11,10 @@ class FixFlowGPTModel extends FlutterFlowModel<FixFlowGPTWidget> {
   ApiCallResponse? apiResultg1p;
   // Stores action output result for [Backend Call - API (fixflow brain)] action in IconButton widget.
   ApiCallResponse? apiResultmfg;
-  bool isDataUploading_uploadDataMrk = false;
-  FFUploadedFile uploadedLocalFile_uploadDataMrk =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-
-  // Stores action output result for [Backend Call - API (fixflow brain)] action in ListView widget.
-  ApiCallResponse? apiResult3ca;
+  // Stores action output result for [Backend Call - API (message)] action in ListView widget.
+  ApiCallResponse? apiResultn49;
+  // Stores action output result for [Backend Call - API (message)] action in Text widget.
+  ApiCallResponse? apiResultc6h;
   bool isDataUploading_uploadDataFqe = false;
   FFUploadedFile uploadedLocalFile_uploadDataFqe =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -25,6 +23,8 @@ class FixFlowGPTModel extends FlutterFlowModel<FixFlowGPTWidget> {
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
+  // Stores action output result for [Backend Call - API (message)] action in TextField widget.
+  ApiCallResponse? apiResultido;
   // Stores action output result for [Backend Call - API (fixflow brain)] action in IconButton widget.
   ApiCallResponse? apiResultqj4;
 

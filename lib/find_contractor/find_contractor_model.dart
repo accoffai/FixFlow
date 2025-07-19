@@ -1,6 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
 import 'find_contractor_widget.dart' show FindContractorWidget;
 import 'package:flutter/material.dart';
@@ -12,21 +11,6 @@ class FindContractorModel extends FlutterFlowModel<FindContractorWidget> {
   ApiCallResponse? apiResultayz;
   // Stores action output result for [Backend Call - API (fixflow brain)] action in Column widget.
   ApiCallResponse? apiResult32d;
-  // State field(s) for DropDown widget.
-  String? dropDownValue1;
-  FormFieldController<String>? dropDownValueController1;
-  // Stores action output result for [Backend Call - API (fixflow brain)] action in DropDown widget.
-  ApiCallResponse? apiResultr5i;
-  // State field(s) for DropDown widget.
-  String? dropDownValue2;
-  FormFieldController<String>? dropDownValueController2;
-  // Stores action output result for [Backend Call - API (fixflow brain)] action in DropDown widget.
-  ApiCallResponse? apiResultz9w;
-  // State field(s) for DropDown widget.
-  String? dropDownValue3;
-  FormFieldController<String>? dropDownValueController3;
-  // Stores action output result for [Backend Call - API (fixflow brain)] action in DropDown widget.
-  ApiCallResponse? apiResultfr3;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;

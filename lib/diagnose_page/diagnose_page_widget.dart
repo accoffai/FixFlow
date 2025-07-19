@@ -94,6 +94,7 @@ class DiagnosePageWidget extends StatefulWidget {
     required this.fixSteps,
     required this.gps,
     required this.diagnoisePage,
+    required this.stateTheIssue,
   });
 
   final String? userInput;
@@ -106,6 +107,7 @@ class DiagnosePageWidget extends StatefulWidget {
   final String? fixSteps;
   final LatLng? gps;
   final dynamic diagnoisePage;
+  final String? stateTheIssue;
 
   static String routeName = 'DiagnosePage';
   static String routePath = '/diagnosePage';
@@ -178,15 +180,15 @@ class _DiagnosePageWidgetState extends State<DiagnosePageWidget> {
 
     _model.stateProblemTextController ??= TextEditingController(
         text: valueOrDefault<String>(
-      widget.userInput,
-      'state the issue',
+      widget.stateTheIssue,
+      '-',
     ));
     _model.stateProblemFocusNode ??= FocusNode();
 
     _model.locationInputTextController ??= TextEditingController(
         text: valueOrDefault<String>(
       widget.zip,
-      'Location',
+      '-',
     ));
     _model.locationInputFocusNode ??= FocusNode();
   }

@@ -10,10 +10,6 @@ class IfOnlyThisAppCOuldModel
 
   // Stores action output result for [Backend Call - API (fixflow brain)] action in IfOnlyThisAppCOuld widget.
   ApiCallResponse? apiResultg2e;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
   // Stores action output result for [Backend Call - API (fixflow brain)] action in Button widget.
   ApiCallResponse? apiResultee5;
   // Stores action output result for [Backend Call - API (fixflow brain)] action in Button widget.
@@ -23,8 +19,5 @@ class IfOnlyThisAppCOuldModel
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    textFieldFocusNode?.dispose();
-    textController?.dispose();
-  }
+  void dispose() {}
 }

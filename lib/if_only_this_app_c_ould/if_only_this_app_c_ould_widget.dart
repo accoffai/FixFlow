@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'if_only_this_app_c_ould_model.dart';
 export 'if_only_this_app_c_ould_model.dart';
@@ -59,11 +58,13 @@ class IfOnlyThisAppCOuldWidget extends StatefulWidget {
     required this.userRequest,
     required this.ifOnlyAppPage,
     this.gps,
+    required this.ifOnlyTHisAPP,
   });
 
   final String? userRequest;
   final dynamic ifOnlyAppPage;
   final LatLng? gps;
+  final String? ifOnlyTHisAPP;
 
   static String routeName = 'IfOnlyThisAppCOuld';
   static String routePath = '/ifOnlyThisAppCOuld';
@@ -100,13 +101,6 @@ class _IfOnlyThisAppCOuldWidgetState extends State<IfOnlyThisAppCOuldWidget> {
         context.pushNamed(FalseErrorWidget.routeName);
       }
     });
-
-    _model.textController ??= TextEditingController(
-        text: valueOrDefault<String>(
-      widget.userRequest,
-      'Suggestion',
-    ));
-    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -239,91 +233,44 @@ class _IfOnlyThisAppCOuldWidgetState extends State<IfOnlyThisAppCOuldWidget> {
                   ].divide(SizedBox(height: 12.0)),
                 ),
                 Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(16.0),
-                      border: Border.all(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        width: 1.0,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: TextFormField(
-                        controller: _model.textController,
-                        focusNode: _model.textFieldFocusNode,
-                        autofocus: false,
-                        textCapitalization: TextCapitalization.sentences,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText:
-                              'What\'s one thing you wish this app could do for your home, tools, or repairs?',
-                          hintStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                font: GoogleFonts.inter(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                fontSize: 16.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          focusedErrorBorder: InputBorder.none,
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      Container(
+                        width: 100.0,
+                        height: 235.3,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                              fontSize: 16.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                              lineHeight: 1.5,
-                            ),
-                        maxLines: 8,
-                        minLines: 4,
-                        keyboardType: TextInputType.multiline,
-                        validator:
-                            _model.textControllerValidator.asValidator(context),
-                        inputFormatters: [
-                          if (!isAndroid && !isiOS)
-                            TextInputFormatter.withFunction(
-                                (oldValue, newValue) {
-                              return TextEditingValue(
-                                selection: newValue.selection,
-                                text: newValue.text.toCapitalization(
-                                    TextCapitalization.sentences),
-                              );
-                            }),
-                        ],
+                        child: Text(
+                          valueOrDefault<String>(
+                            widget.ifOnlyTHisAPP,
+                            '-',
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 InkWell(

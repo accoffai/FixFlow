@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -7,6 +8,7 @@ import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'plan_project_page_model.dart';
 export 'plan_project_page_model.dart';
@@ -119,10 +121,13 @@ class PlanProjectPageWidget extends StatefulWidget {
   State<PlanProjectPageWidget> createState() => _PlanProjectPageWidgetState();
 }
 
-class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
+class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget>
+    with TickerProviderStateMixin {
   late PlanProjectPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -174,6 +179,21 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
       'Zip',
     ));
     _model.zipFocusNode ??= FocusNode();
+
+    animationsMap.addAll({
+      'buttonOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -322,56 +342,136 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
                     Form(
                       key: _model.formKey,
                       autovalidateMode: AutovalidateMode.disabled,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Project Name',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.interTight(
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          _model.apiResult7n1 =
+                              await FixFlowAIGroup.fixflowBrainCall.call(
+                            screenContext: widget.planProjectPage?.toString(),
+                            inputType: widget.planProjectPage?.toString(),
+                            inputValue: widget.planProjectPage?.toString(),
+                            userId: widget.planProjectPage?.toString(),
+                          );
+
+                          if (!(_model.apiResult7n1?.succeeded ?? true)) {
+                            context.pushNamed(FalseErrorWidget.routeName);
+                          }
+
+                          safeSetState(() {});
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Project Name',
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w600,
                                         fontStyle: FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .fontStyle,
                                       ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
+                                ),
+                                TextFormField(
+                                  controller: _model.projectNameTextController,
+                                  focusNode: _model.projectNameFocusNode,
+                                  onFieldSubmitted: (_) async {
+                                    _model.apiResultspj = await FixFlowAIGroup
+                                        .fixflowBrainCall
+                                        .call();
+
+                                    if (!(_model.apiResultspj?.succeeded ??
+                                        true)) {
+                                      context.pushNamed(
+                                          FalseErrorWidget.routeName);
+                                    }
+
+                                    safeSetState(() {});
+                                  },
+                                  autofocus: false,
+                                  textCapitalization: TextCapitalization.words,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        'e.g., Bathroom Sink Repair, Install Light Fixture',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: Color(0xFF888888),
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF444444),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
                                     ),
-                              ),
-                              TextFormField(
-                                controller: _model.projectNameTextController,
-                                focusNode: _model.projectNameFocusNode,
-                                onFieldSubmitted: (_) async {
-                                  _model.apiResultspj = await FixFlowAIGroup
-                                      .fixflowBrainCall
-                                      .call();
-
-                                  if (!(_model.apiResultspj?.succeeded ??
-                                      true)) {
-                                    context
-                                        .pushNamed(FalseErrorWidget.routeName);
-                                  }
-
-                                  safeSetState(() {});
-                                },
-                                autofocus: false,
-                                textCapitalization: TextCapitalization.words,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText:
-                                      'e.g., Bathroom Sink Repair, Install Light Fixture',
-                                  hintStyle: FlutterFlowTheme.of(context)
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF00CFFF),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFF5C00),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFF5C00),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color(0xFF2C2C2E),
+                                    contentPadding:
+                                        EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 16.0, 16.0, 16.0),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
                                         font: GoogleFonts.inter(
@@ -384,7 +484,7 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        color: Color(0xFF888888),
+                                        color: Colors.white,
                                         fontSize: 16.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
@@ -394,415 +494,444 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF444444),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF00CFFF),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFFF5C00),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFFF5C00),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: Color(0xFF2C2C2E),
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 16.0, 16.0, 16.0),
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                validator: _model
-                                    .projectNameTextControllerValidator
-                                    .asValidator(context),
-                                inputFormatters: [
-                                  if (!isAndroid && !isiOS)
-                                    TextInputFormatter.withFunction(
-                                        (oldValue, newValue) {
-                                      return TextEditingValue(
-                                        selection: newValue.selection,
-                                        text: newValue.text.toCapitalization(
-                                            TextCapitalization.words),
-                                      );
-                                    }),
-                                ],
-                              ),
-                            ].divide(SizedBox(height: 8.0)),
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Describe what you\'re trying to do',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                              TextFormField(
-                                controller:
-                                    _model.describeProjectTextController,
-                                focusNode: _model.describeProjectFocusNode,
-                                onFieldSubmitted: (_) async {
-                                  _model.apiResultok2 = await FixFlowAIGroup
-                                      .fixflowBrainCall
-                                      .call();
-
-                                  if (!(_model.apiResultok2?.succeeded ??
-                                      true)) {
-                                    context
-                                        .pushNamed(FalseErrorWidget.routeName);
-                                  }
-
-                                  safeSetState(() {});
-                                },
-                                autofocus: false,
-                                textCapitalization:
-                                    TextCapitalization.sentences,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText:
-                                      'Explain the steps you think are involved or what you need help with…',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Color(0xFF888888),
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF444444),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF00CFFF),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFFF5C00),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFFF5C00),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: Color(0xFF2C2C2E),
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 16.0, 16.0, 16.0),
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                maxLines: 4,
-                                minLines: 3,
-                                keyboardType: TextInputType.multiline,
-                                validator: _model
-                                    .describeProjectTextControllerValidator
-                                    .asValidator(context),
-                                inputFormatters: [
-                                  if (!isAndroid && !isiOS)
-                                    TextInputFormatter.withFunction(
-                                        (oldValue, newValue) {
-                                      return TextEditingValue(
-                                        selection: newValue.selection,
-                                        text: newValue.text.toCapitalization(
-                                            TextCapitalization.sentences),
-                                      );
-                                    }),
-                                ],
-                              ),
-                            ].divide(SizedBox(height: 8.0)),
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Estimated Budget (\$)',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                              TextFormField(
-                                controller:
-                                    _model.estimatedBudgetTextController,
-                                focusNode: _model.estimatedBudgetFocusNode,
-                                onFieldSubmitted: (_) async {
-                                  _model.apiResultdqr = await FixFlowAIGroup
-                                      .fixflowBrainCall
-                                      .call();
-
-                                  if (!(_model.apiResultdqr?.succeeded ??
-                                      true)) {
-                                    context
-                                        .pushNamed(FalseErrorWidget.routeName);
-                                  }
-
-                                  safeSetState(() {});
-                                },
-                                autofocus: false,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText:
-                                      'Optional, helps us recommend materials/tools',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Color(0xFF888888),
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF444444),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFF00CFFF),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFFF5C00),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFFF5C00),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: Color(0xFF2C2C2E),
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 16.0, 16.0, 16.0),
-                                  prefixIcon: Icon(
-                                    Icons.attach_money,
-                                    color: Color(0xFF888888),
-                                    size: 20.0,
-                                  ),
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                keyboardType: TextInputType.number,
-                                validator: _model
-                                    .estimatedBudgetTextControllerValidator
-                                    .asValidator(context),
-                              ),
-                            ].divide(SizedBox(height: 8.0)),
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Where is this project located?',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _model.zipTextController,
-                                      focusNode: _model.zipFocusNode,
-                                      onFieldSubmitted: (_) async {
-                                        _model.apiResultlhz =
-                                            await FixFlowAIGroup
-                                                .fixflowBrainCall
-                                                .call(
-                                          userId: '',
-                                          screenContext: '',
-                                          inputType: '',
-                                          inputValue: '',
+                                  validator: _model
+                                      .projectNameTextControllerValidator
+                                      .asValidator(context),
+                                  inputFormatters: [
+                                    if (!isAndroid && !isiOS)
+                                      TextInputFormatter.withFunction(
+                                          (oldValue, newValue) {
+                                        return TextEditingValue(
+                                          selection: newValue.selection,
+                                          text: newValue.text.toCapitalization(
+                                              TextCapitalization.words),
                                         );
+                                      }),
+                                  ],
+                                ),
+                              ].divide(SizedBox(height: 8.0)),
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Describe what you\'re trying to do',
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleMedium
+                                            .fontStyle,
+                                      ),
+                                ),
+                                TextFormField(
+                                  controller:
+                                      _model.describeProjectTextController,
+                                  focusNode: _model.describeProjectFocusNode,
+                                  onFieldSubmitted: (_) async {
+                                    _model.apiResultok2 = await FixFlowAIGroup
+                                        .fixflowBrainCall
+                                        .call();
 
-                                        if (!(_model.apiResultlhz?.succeeded ??
-                                            true)) {
-                                          context.pushNamed(
-                                              FalseErrorWidget.routeName);
-                                        }
+                                    if (!(_model.apiResultok2?.succeeded ??
+                                        true)) {
+                                      context.pushNamed(
+                                          FalseErrorWidget.routeName);
+                                    }
 
-                                        safeSetState(() {});
-                                      },
-                                      autofocus: false,
-                                      textInputAction: TextInputAction.done,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        hintText:
-                                            'Auto-detect or enter ZIP code',
-                                        hintStyle: FlutterFlowTheme.of(context)
+                                    safeSetState(() {});
+                                  },
+                                  autofocus: false,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        'Explain the steps you think are involved or what you need help with…',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: Color(0xFF888888),
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF444444),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF00CFFF),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFF5C00),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFF5C00),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color(0xFF2C2C2E),
+                                    contentPadding:
+                                        EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 16.0, 16.0, 16.0),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.inter(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                  maxLines: 4,
+                                  minLines: 3,
+                                  keyboardType: TextInputType.multiline,
+                                  validator: _model
+                                      .describeProjectTextControllerValidator
+                                      .asValidator(context),
+                                  inputFormatters: [
+                                    if (!isAndroid && !isiOS)
+                                      TextInputFormatter.withFunction(
+                                          (oldValue, newValue) {
+                                        return TextEditingValue(
+                                          selection: newValue.selection,
+                                          text: newValue.text.toCapitalization(
+                                              TextCapitalization.sentences),
+                                        );
+                                      }),
+                                  ],
+                                ),
+                              ].divide(SizedBox(height: 8.0)),
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Estimated Budget (\$)',
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleMedium
+                                            .fontStyle,
+                                      ),
+                                ),
+                                TextFormField(
+                                  controller:
+                                      _model.estimatedBudgetTextController,
+                                  focusNode: _model.estimatedBudgetFocusNode,
+                                  onFieldSubmitted: (_) async {
+                                    _model.apiResultdqr = await FixFlowAIGroup
+                                        .fixflowBrainCall
+                                        .call();
+
+                                    if (!(_model.apiResultdqr?.succeeded ??
+                                        true)) {
+                                      context.pushNamed(
+                                          FalseErrorWidget.routeName);
+                                    }
+
+                                    safeSetState(() {});
+                                  },
+                                  autofocus: false,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        'Optional, helps us recommend materials/tools',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: Color(0xFF888888),
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF444444),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFF00CFFF),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFF5C00),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFFF5C00),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color(0xFF2C2C2E),
+                                    contentPadding:
+                                        EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 16.0, 16.0, 16.0),
+                                    prefixIcon: Icon(
+                                      Icons.attach_money,
+                                      color: Color(0xFF888888),
+                                      size: 20.0,
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.inter(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                  keyboardType: TextInputType.number,
+                                  validator: _model
+                                      .estimatedBudgetTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ].divide(SizedBox(height: 8.0)),
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Where is this project located?',
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleMedium
+                                            .fontStyle,
+                                      ),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: TextFormField(
+                                        controller: _model.zipTextController,
+                                        focusNode: _model.zipFocusNode,
+                                        onFieldSubmitted: (_) async {
+                                          _model.apiResultlhz =
+                                              await FixFlowAIGroup
+                                                  .fixflowBrainCall
+                                                  .call(
+                                            userId: '',
+                                            screenContext: '',
+                                            inputType: '',
+                                            inputValue: '',
+                                          );
+
+                                          if (!(_model
+                                                  .apiResultlhz?.succeeded ??
+                                              true)) {
+                                            context.pushNamed(
+                                                FalseErrorWidget.routeName);
+                                          }
+
+                                          safeSetState(() {});
+                                        },
+                                        autofocus: false,
+                                        textInputAction: TextInputAction.done,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          hintText:
+                                              'Auto-detect or enter ZIP code',
+                                          hintStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.inter(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color: Color(0xFF888888),
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFF444444),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFF00CFFF),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFFFF5C00),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0xFFFF5C00),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          filled: true,
+                                          fillColor: Color(0xFF2C2C2E),
+                                          contentPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  16.0, 16.0, 16.0, 16.0),
+                                          prefixIcon: Icon(
+                                            Icons.location_on,
+                                            color: Color(0xFF888888),
+                                            size: 20.0,
+                                          ),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               font: GoogleFonts.inter(
@@ -815,7 +944,7 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
                                                         .bodyMedium
                                                         .fontStyle,
                                               ),
-                                              color: Color(0xFF888888),
+                                              color: Colors.white,
                                               fontSize: 16.0,
                                               letterSpacing: 0.0,
                                               fontWeight:
@@ -827,108 +956,42 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
                                                       .bodyMedium
                                                       .fontStyle,
                                             ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xFF444444),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xFF00CFFF),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xFFFF5C00),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xFFFF5C00),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        filled: true,
-                                        fillColor: Color(0xFF2C2C2E),
-                                        contentPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                16.0, 16.0, 16.0, 16.0),
-                                        prefixIcon: Icon(
-                                          Icons.location_on,
-                                          color: Color(0xFF888888),
-                                          size: 20.0,
-                                        ),
+                                        keyboardType: TextInputType.number,
+                                        validator: _model
+                                            .zipTextControllerValidator
+                                            .asValidator(context),
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: Colors.white,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                      keyboardType: TextInputType.number,
-                                      validator: _model
-                                          .zipTextControllerValidator
-                                          .asValidator(context),
                                     ),
-                                  ),
-                                  FlutterFlowIconButton(
-                                    borderRadius: 12.0,
-                                    buttonSize: 56.0,
-                                    fillColor: Color(0xFF00CFFF),
-                                    icon: Icon(
-                                      Icons.gps_fixed,
-                                      color: Color(0xFF1C1C1E),
-                                      size: 24.0,
+                                    FlutterFlowIconButton(
+                                      borderRadius: 12.0,
+                                      buttonSize: 56.0,
+                                      fillColor: Color(0xFF00CFFF),
+                                      icon: Icon(
+                                        Icons.gps_fixed,
+                                        color: Color(0xFF1C1C1E),
+                                        size: 24.0,
+                                      ),
+                                      onPressed: () async {
+                                        _model.apiResult9ui =
+                                            await FixFlowAIGroup
+                                                .fixflowBrainCall
+                                                .call();
+
+                                        if (!(_model.apiResult9ui?.succeeded ??
+                                            true)) {
+                                          context.pushNamed(
+                                              FalseErrorWidget.routeName);
+                                        }
+
+                                        safeSetState(() {});
+                                      },
                                     ),
-                                    onPressed: () async {
-                                      _model.apiResult9ui = await FixFlowAIGroup
-                                          .fixflowBrainCall
-                                          .call();
-
-                                      if (!(_model.apiResult9ui?.succeeded ??
-                                          true)) {
-                                        context.pushNamed(
-                                            FalseErrorWidget.routeName);
-                                      }
-
-                                      safeSetState(() {});
-                                    },
-                                  ),
-                                ].divide(SizedBox(width: 12.0)),
-                              ),
-                            ].divide(SizedBox(height: 8.0)),
-                          ),
-                        ].divide(SizedBox(height: 20.0)),
+                                  ].divide(SizedBox(width: 12.0)),
+                                ),
+                              ].divide(SizedBox(height: 8.0)),
+                            ),
+                          ].divide(SizedBox(height: 20.0)),
+                        ),
                       ),
                     ),
                     Container(
@@ -984,7 +1047,7 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
                                 widget.planProjectPage?.toString(),
                                 ParamType.String,
                               ),
-                              'aiConversation': serializeParam(
+                              'fixflowAssistant': serializeParam(
                                 widget.planProjectPage?.toString(),
                                 ParamType.String,
                               ),
@@ -1004,11 +1067,32 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
                                 widget.planProjectPage,
                                 ParamType.JSON,
                               ),
+                              'navigate': serializeParam(
+                                widget.gps,
+                                ParamType.LatLng,
+                              ),
+                              'conversationList': serializeParam(
+                                widget.planProjectPage,
+                                ParamType.int,
+                              ),
+                              'conversation': serializeParam(
+                                widget.planProjectPage?.toString(),
+                                ParamType.String,
+                              ),
+                              'conversationFLow': serializeParam(
+                                widget.planProjectPage,
+                                ParamType.JSON,
+                              ),
                             }.withoutNulls,
                           );
 
                           _model.apiResulttwr =
-                              await FixFlowAIGroup.fixflowBrainCall.call();
+                              await FixFlowAIGroup.fixflowBrainCall.call(
+                            userId: widget.planProjectPage?.toString(),
+                            screenContext: widget.planProjectPage?.toString(),
+                            inputType: widget.planProjectPage?.toString(),
+                            inputValue: widget.planProjectPage?.toString(),
+                          );
 
                           if (!(_model.apiResulttwr?.succeeded ?? true)) {
                             context.pushNamed(FalseErrorWidget.routeName);
@@ -1054,7 +1138,8 @@ class _PlanProjectPageWidgetState extends State<PlanProjectPageWidget> {
                           ),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                      ),
+                      ).animateOnPageLoad(
+                          animationsMap['buttonOnPageLoadAnimation']!),
                     ),
                   ]
                       .divide(SizedBox(height: 24.0))

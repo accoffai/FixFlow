@@ -61,9 +61,11 @@ class FixFLowChatroomWidget extends StatefulWidget {
   const FixFLowChatroomWidget({
     super.key,
     required this.fixFLowChat,
+    this.navigate,
   });
 
   final dynamic fixFLowChat;
+  final LatLng? navigate;
 
   static String routeName = 'FixFLowChatroom';
   static String routePath = '/fixFLowChatroom';
@@ -522,7 +524,19 @@ class _FixFLowChatroomWidgetState extends State<FixFLowChatroomWidget> {
                                 widget.fixFLowChat?.toString(),
                                 ParamType.String,
                               ),
-                              'aiConversation': serializeParam(
+                              'fixflowAssistant': serializeParam(
+                                widget.fixFLowChat?.toString(),
+                                ParamType.String,
+                              ),
+                              'gps': serializeParam(
+                                widget.navigate,
+                                ParamType.LatLng,
+                              ),
+                              'conversationList': serializeParam(
+                                widget.fixFLowChat,
+                                ParamType.JSON,
+                              ),
+                              'inputMessageText': serializeParam(
                                 widget.fixFLowChat?.toString(),
                                 ParamType.String,
                               ),
@@ -545,57 +559,29 @@ class _FixFLowChatroomWidgetState extends State<FixFLowChatroomWidget> {
                               highlightColor: Colors.transparent,
                               onTap: () async {
                                 context.pushNamed(
-                                  MyProjectGuidanceWidget.routeName,
+                                  FixFlowGPTWidget.routeName,
                                   queryParameters: {
-                                    'savedChecklist': serializeParam(
+                                    'fixflowgpt': serializeParam(
                                       widget.fixFLowChat,
                                       ParamType.JSON,
-                                    ),
-                                    'savedProject': serializeParam(
-                                      widget.fixFLowChat,
-                                      ParamType.JSON,
-                                    ),
-                                    'diyGuidance': serializeParam(
-                                      widget.fixFLowChat?.toString(),
-                                      ParamType.String,
-                                    ),
-                                    'projectType': serializeParam(
-                                      widget.fixFLowChat?.toString(),
-                                      ParamType.String,
-                                    ),
-                                    'location': serializeParam(
-                                      widget.fixFLowChat?.toString(),
-                                      ParamType.String,
-                                    ),
-                                    'scope': serializeParam(
-                                      widget.fixFLowChat?.toString(),
-                                      ParamType.String,
-                                    ),
-                                    'projectName': serializeParam(
-                                      widget.fixFLowChat?.toString(),
-                                      ParamType.String,
-                                    ),
-                                    'locationType': serializeParam(
-                                      widget.fixFLowChat?.toString(),
-                                      ParamType.String,
-                                    ),
-                                    'completionPercentage': serializeParam(
-                                      widget.fixFLowChat,
-                                      ParamType.int,
-                                    ),
-                                    'aiOnlineStatus': serializeParam(
-                                      widget.fixFLowChat,
-                                      ParamType.bool,
-                                    ),
-                                    'aiConversation': serializeParam(
-                                      widget.fixFLowChat?.toString(),
-                                      ParamType.String,
                                     ),
                                     'userConversation': serializeParam(
                                       widget.fixFLowChat?.toString(),
                                       ParamType.String,
                                     ),
-                                    'statusColor': serializeParam(
+                                    'fixflowAssistant': serializeParam(
+                                      widget.fixFLowChat?.toString(),
+                                      ParamType.String,
+                                    ),
+                                    'gps': serializeParam(
+                                      widget.navigate,
+                                      ParamType.LatLng,
+                                    ),
+                                    'conversationList': serializeParam(
+                                      widget.fixFLowChat,
+                                      ParamType.JSON,
+                                    ),
+                                    'inputMessageText': serializeParam(
                                       widget.fixFLowChat?.toString(),
                                       ParamType.String,
                                     ),

@@ -230,7 +230,19 @@ class _MyProjectsWidgetState extends State<MyProjectsWidget> {
                         widget.savedProject?.toString(),
                         ParamType.String,
                       ),
-                      'aiConversation': serializeParam(
+                      'fixflowAssistant': serializeParam(
+                        widget.savedProject?.toString(),
+                        ParamType.String,
+                      ),
+                      'gps': serializeParam(
+                        widget.gps,
+                        ParamType.LatLng,
+                      ),
+                      'conversationList': serializeParam(
+                        widget.savedProject,
+                        ParamType.JSON,
+                      ),
+                      'inputMessageText': serializeParam(
                         widget.savedProject?.toString(),
                         ParamType.String,
                       ),
@@ -495,6 +507,18 @@ class _MyProjectsWidgetState extends State<MyProjectsWidget> {
                                         ),
                                         'statusColor': serializeParam(
                                           '',
+                                          ParamType.String,
+                                        ),
+                                        'conversationOverview': serializeParam(
+                                          widget.diy,
+                                          ParamType.JSON,
+                                        ),
+                                        'conversation': serializeParam(
+                                          widget.diy?.toString(),
+                                          ParamType.String,
+                                        ),
+                                        'conversatioFlow': serializeParam(
+                                          widget.diy?.toString(),
                                           ParamType.String,
                                         ),
                                       }.withoutNulls,

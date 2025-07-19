@@ -99,6 +99,8 @@ class MainDashWidget extends StatefulWidget {
     required this.mainDash,
     required this.userName,
     required this.gps,
+    this.contractor,
+    this.ifOnly,
   });
 
   final dynamic planProject;
@@ -107,6 +109,8 @@ class MainDashWidget extends StatefulWidget {
   final dynamic mainDash;
   final String? userName;
   final LatLng? gps;
+  final String? contractor;
+  final String? ifOnly;
 
   static String routeName = 'MainDash';
   static String routePath = '/mainDash';
@@ -737,6 +741,10 @@ class _MainDashWidgetState extends State<MainDashWidget>
                                       widget.planProject,
                                       ParamType.JSON,
                                     ),
+                                    'stateTheIssue': serializeParam(
+                                      widget.planProject?.toString(),
+                                      ParamType.String,
+                                    ),
                                   }.withoutNulls,
                                 );
                               },
@@ -817,6 +825,10 @@ class _MainDashWidgetState extends State<MainDashWidget>
                                               'diagnoisePage': serializeParam(
                                                 widget.planProject,
                                                 ParamType.JSON,
+                                              ),
+                                              'stateTheIssue': serializeParam(
+                                                widget.planProject?.toString(),
+                                                ParamType.String,
                                               ),
                                             }.withoutNulls,
                                           );
@@ -1129,6 +1141,26 @@ class _MainDashWidgetState extends State<MainDashWidget>
                                       widget.gps,
                                       ParamType.LatLng,
                                     ),
+                                    'projectType': serializeParam(
+                                      '',
+                                      ParamType.String,
+                                    ),
+                                    'timeline': serializeParam(
+                                      '',
+                                      ParamType.String,
+                                    ),
+                                    'budget': serializeParam(
+                                      0,
+                                      ParamType.int,
+                                    ),
+                                    'zip': serializeParam(
+                                      '',
+                                      ParamType.String,
+                                    ),
+                                    'userContractorPreference': serializeParam(
+                                      widget.mainDash?.toString(),
+                                      ParamType.String,
+                                    ),
                                   }.withoutNulls,
                                 );
                               },
@@ -1195,6 +1227,27 @@ class _MainDashWidgetState extends State<MainDashWidget>
                                               'gps': serializeParam(
                                                 widget.gps,
                                                 ParamType.LatLng,
+                                              ),
+                                              'projectType': serializeParam(
+                                                '',
+                                                ParamType.String,
+                                              ),
+                                              'timeline': serializeParam(
+                                                '',
+                                                ParamType.String,
+                                              ),
+                                              'budget': serializeParam(
+                                                0,
+                                                ParamType.int,
+                                              ),
+                                              'zip': serializeParam(
+                                                '',
+                                                ParamType.String,
+                                              ),
+                                              'userContractorPreference':
+                                                  serializeParam(
+                                                widget.contractor,
+                                                ParamType.String,
                                               ),
                                             }.withoutNulls,
                                           );
@@ -1298,6 +1351,14 @@ class _MainDashWidgetState extends State<MainDashWidget>
                                       widget.mainDash,
                                       ParamType.JSON,
                                     ),
+                                    'gps': serializeParam(
+                                      widget.gps,
+                                      ParamType.LatLng,
+                                    ),
+                                    'ifOnlyTHisAPP': serializeParam(
+                                      widget.ifOnly,
+                                      ParamType.String,
+                                    ),
                                   }.withoutNulls,
                                 );
                               },
@@ -1344,6 +1405,14 @@ class _MainDashWidgetState extends State<MainDashWidget>
                                               'ifOnlyAppPage': serializeParam(
                                                 widget.mainDash,
                                                 ParamType.JSON,
+                                              ),
+                                              'gps': serializeParam(
+                                                widget.gps,
+                                                ParamType.LatLng,
+                                              ),
+                                              'ifOnlyTHisAPP': serializeParam(
+                                                widget.ifOnly,
+                                                ParamType.String,
                                               ),
                                             }.withoutNulls,
                                           );
@@ -1982,7 +2051,19 @@ class _MainDashWidgetState extends State<MainDashWidget>
                                     widget.mainDash?.toString(),
                                     ParamType.String,
                                   ),
-                                  'aiConversation': serializeParam(
+                                  'fixflowAssistant': serializeParam(
+                                    widget.mainDash?.toString(),
+                                    ParamType.String,
+                                  ),
+                                  'gps': serializeParam(
+                                    widget.gps,
+                                    ParamType.LatLng,
+                                  ),
+                                  'conversationList': serializeParam(
+                                    widget.mainDash,
+                                    ParamType.JSON,
+                                  ),
+                                  'inputMessageText': serializeParam(
                                     widget.mainDash?.toString(),
                                     ParamType.String,
                                   ),
@@ -2015,7 +2096,19 @@ class _MainDashWidgetState extends State<MainDashWidget>
                                           widget.mainDash?.toString(),
                                           ParamType.String,
                                         ),
-                                        'aiConversation': serializeParam(
+                                        'fixflowAssistant': serializeParam(
+                                          widget.mainDash?.toString(),
+                                          ParamType.String,
+                                        ),
+                                        'gps': serializeParam(
+                                          widget.gps,
+                                          ParamType.LatLng,
+                                        ),
+                                        'conversationList': serializeParam(
+                                          widget.mainDash,
+                                          ParamType.JSON,
+                                        ),
+                                        'inputMessageText': serializeParam(
                                           widget.mainDash?.toString(),
                                           ParamType.String,
                                         ),

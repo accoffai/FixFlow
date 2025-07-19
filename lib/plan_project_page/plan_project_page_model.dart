@@ -12,6 +12,8 @@ class PlanProjectPageModel extends FlutterFlowModel<PlanProjectPageWidget> {
   ApiCallResponse? apiResultk46;
   // Stores action output result for [Backend Call - API (fixflow brain)] action in Column widget.
   ApiCallResponse? apiResultg9o;
+  // Stores action output result for [Backend Call - API (fixflow brain)] action in Column widget.
+  ApiCallResponse? apiResult7n1;
   // State field(s) for projectName widget.
   FocusNode? projectNameFocusNode;
   TextEditingController? projectNameTextController;

@@ -2,7 +2,6 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_web_view.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -198,6 +197,18 @@ class _DiyguideWidgetState extends State<DiyguideWidget> {
                     widget.diyPage?.toString(),
                     ParamType.String,
                   ),
+                  'conversationOverview': serializeParam(
+                    widget.diyPage,
+                    ParamType.JSON,
+                  ),
+                  'conversation': serializeParam(
+                    widget.diyPage?.toString(),
+                    ParamType.String,
+                  ),
+                  'conversatioFlow': serializeParam(
+                    widget.diyPage?.toString(),
+                    ParamType.String,
+                  ),
                 }.withoutNulls,
               );
 
@@ -291,15 +302,45 @@ class _DiyguideWidgetState extends State<DiyguideWidget> {
                           width: 1.0,
                         ),
                       ),
-                      child: FlutterFlowWebView(
-                        content: valueOrDefault<String>(
-                          widget.diyGuide,
-                          'DIY GUIDE',
-                        ),
-                        width: double.infinity,
-                        height: double.infinity,
-                        verticalScroll: true,
-                        horizontalScroll: true,
+                      child: Builder(
+                        builder: (context) {
+                          final diyGuide = widget.diyPage!.toList();
+
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: diyGuide.length,
+                            itemBuilder: (context, diyGuideIndex) {
+                              final diyGuideItem = diyGuide[diyGuideIndex];
+                              return Text(
+                                valueOrDefault<String>(
+                                  widget.diyGuide,
+                                  'DIY Guide',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
                     Column(

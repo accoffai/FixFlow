@@ -131,6 +131,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'gps',
               ParamType.LatLng,
             ),
+            contractor: params.getParam(
+              'contractor',
+              ParamType.String,
+            ),
+            ifOnly: params.getParam(
+              'ifOnly',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -176,6 +184,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             diagnoisePage: params.getParam(
               'diagnoisePage',
               ParamType.JSON,
+            ),
+            stateTheIssue: params.getParam(
+              'stateTheIssue',
+              ParamType.String,
             ),
           ),
         ),
@@ -245,6 +257,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'gps',
               ParamType.LatLng,
             ),
+            projectType: params.getParam(
+              'projectType',
+              ParamType.String,
+            ),
+            timeline: params.getParam(
+              'timeline',
+              ParamType.String,
+            ),
+            budget: params.getParam(
+              'budget',
+              ParamType.int,
+            ),
+            zip: params.getParam(
+              'zip',
+              ParamType.String,
+            ),
+            userContractorPreference: params.getParam(
+              'userContractorPreference',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -262,6 +294,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             gps: params.getParam(
               'gps',
               ParamType.LatLng,
+            ),
+            ifOnlyTHisAPP: params.getParam(
+              'ifOnlyTHisAPP',
+              ParamType.String,
             ),
           ),
         ),
@@ -479,6 +515,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'statusColor',
               ParamType.String,
             ),
+            conversationOverview: params.getParam(
+              'conversationOverview',
+              ParamType.JSON,
+            ),
+            conversation: params.getParam(
+              'conversation',
+              ParamType.String,
+            ),
+            conversatioFlow: params.getParam(
+              'conversatioFlow',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -521,8 +569,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'aiProTips',
               ParamType.String,
             ),
-            aiConversation: params.getParam(
-              'aiConversation',
+            fixflowAssistant: params.getParam(
+              'fixflowAssistant',
               ParamType.String,
             ),
             userInput: params.getParam(
@@ -544,6 +592,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             navigate: params.getParam(
               'navigate',
               ParamType.LatLng,
+            ),
+            conversationList: params.getParam(
+              'conversationList',
+              ParamType.int,
+            ),
+            conversation: params.getParam(
+              'conversation',
+              ParamType.String,
+            ),
+            conversationFLow: params.getParam(
+              'conversationFLow',
+              ParamType.JSON,
             ),
           ),
         ),
@@ -584,6 +644,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             fixFLowChat: params.getParam(
               'fixFLowChat',
               ParamType.JSON,
+            ),
+            navigate: params.getParam(
+              'navigate',
+              ParamType.LatLng,
             ),
           ),
         ),
@@ -636,13 +700,29 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'userConversation',
               ParamType.String,
             ),
-            aiConversation: params.getParam(
-              'aiConversation',
+            fixflowAssistant: params.getParam(
+              'fixflowAssistant',
               ParamType.String,
             ),
             gps: params.getParam(
               'gps',
               ParamType.LatLng,
+            ),
+            conversationList: params.getParam(
+              'conversationList',
+              ParamType.JSON,
+            ),
+            inputMessageText: params.getParam(
+              'inputMessageText',
+              ParamType.String,
+            ),
+            conversation: params.getParam(
+              'conversation',
+              ParamType.int,
+            ),
+            conversationflow: params.getParam(
+              'conversationflow',
+              ParamType.String,
             ),
           ),
         )

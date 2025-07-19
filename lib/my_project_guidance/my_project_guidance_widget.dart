@@ -108,6 +108,9 @@ class MyProjectGuidanceWidget extends StatefulWidget {
     required this.aiConversation,
     required this.userConversation,
     required this.statusColor,
+    required this.conversationOverview,
+    this.conversation,
+    this.conversatioFlow,
   }) : this.aiOnlineStatus = aiOnlineStatus ?? true;
 
   final dynamic savedChecklist;
@@ -123,6 +126,9 @@ class MyProjectGuidanceWidget extends StatefulWidget {
   final String? aiConversation;
   final String? userConversation;
   final String? statusColor;
+  final dynamic conversationOverview;
+  final String? conversation;
+  final String? conversatioFlow;
 
   static String routeName = 'MyProjectGuidance';
   static String routePath = '/myProjectGuidance';
@@ -160,8 +166,11 @@ class _MyProjectGuidanceWidgetState extends State<MyProjectGuidanceWidget> {
       }
     });
 
-    _model.textController ??=
-        TextEditingController(text: widget.userConversation);
+    _model.textController ??= TextEditingController(
+        text: valueOrDefault<String>(
+      widget.userConversation,
+      '-',
+    ));
     _model.textFieldFocusNode ??= FocusNode();
   }
 
@@ -513,214 +522,49 @@ class _MyProjectGuidanceWidgetState extends State<MyProjectGuidanceWidget> {
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+                      child: Builder(
+                        builder: (context) {
+                          final projectOverview =
+                              widget.savedProject!.toList();
+
+                          return Column(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Project Overview',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleMedium
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      valueOrDefault<String>(
-                                        widget.locationType,
-                                        'locationType',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontStyle,
-                                            ),
-                                            color: Color(0xFFAAAAAA),
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(projectOverview.length,
+                                (projectOverviewIndex) {
+                              final projectOverviewItem =
+                                  projectOverview[projectOverviewIndex];
+                              return Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Project Overview',
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .override(
+                                          font: GoogleFonts.interTight(
+                                            fontWeight: FontWeight.w600,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodySmall
+                                                    .titleMedium
                                                     .fontStyle,
                                           ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 2.0, 0.0, 0.0),
-                                      child: Text(
-                                        valueOrDefault<String>(
-                                          widget.location,
-                                          'Location',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleMedium
+                                                  .fontStyle,
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                              color: Colors.white,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Type',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .override(
-                                            font: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .fontStyle,
-                                            ),
-                                            color: Color(0xFFAAAAAA),
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodySmall
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 2.0, 0.0, 0.0),
-                                      child: Text(
-                                        valueOrDefault<String>(
-                                          widget.projectType,
-                                          'Project Type',
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                              color: Colors.white,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ].divide(SizedBox(width: 16.0)),
-                          ),
-                          Text(
-                            'Scope',
-                            style:
-                                FlutterFlowTheme.of(context).bodySmall.override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w500,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .fontStyle,
-                                      ),
-                                      color: Color(0xFFAAAAAA),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .fontStyle,
-                                    ),
-                          ),
-                          Text(
-                            valueOrDefault<String>(
-                              widget.scope,
-                              'Scope Of Work',
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
                                   ),
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
-                          ),
-                        ].divide(SizedBox(height: 8.0)),
+                                ],
+                              );
+                            }).divide(SizedBox(height: 8.0)),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -739,254 +583,148 @@ class _MyProjectGuidanceWidgetState extends State<MyProjectGuidanceWidget> {
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 12.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              _model.apiResult6ye =
-                                  await FixFlowAIGroup.fixflowBrainCall.call();
+                    child: Builder(
+                      builder: (context) {
+                        final conversationOverview =
+                            widget.conversationOverview!.toList();
 
-                              if (!(_model.apiResult6ye?.succeeded ?? true)) {
-                                context.pushNamed(FalseErrorWidget.routeName);
-                              }
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: List.generate(conversationOverview.length,
+                              (conversationOverviewIndex) {
+                            final conversationOverviewItem =
+                                conversationOverview[conversationOverviewIndex];
+                            return Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 12.0, 16.0, 12.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  _model.apiResult6ye = await FixFlowAIGroup
+                                      .fixflowBrainCall
+                                      .call();
 
-                              safeSetState(() {});
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Color(0xFF404040),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    _model.apiResult4yg = await FixFlowAIGroup
-                                        .fixflowBrainCall
-                                        .call();
+                                  if (!(_model.apiResult6ye?.succeeded ??
+                                      true)) {
+                                    context
+                                        .pushNamed(FalseErrorWidget.routeName);
+                                  }
 
-                                    if (!(_model.apiResult4yg?.succeeded ??
-                                        true)) {
-                                      context.pushNamed(
-                                          FalseErrorWidget.routeName);
-                                    }
+                                  safeSetState(() {});
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF404040),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(12.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        _model.apiResult4yg =
+                                            await FixFlowAIGroup
+                                                .fixflowBrainCall
+                                                .call();
 
-                                    safeSetState(() {});
-                                  },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'AI Guidance Chat',
-                                        style: FlutterFlowTheme.of(context)
-                                            .titleMedium
-                                            .override(
-                                              font: GoogleFonts.interTight(
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleMedium
-                                                        .fontStyle,
-                                              ),
-                                              color: Colors.white,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .fontStyle,
-                                            ),
-                                      ),
-                                      Row(
+                                        if (!(_model.apiResult4yg?.succeeded ??
+                                            true)) {
+                                          context.pushNamed(
+                                              FalseErrorWidget.routeName);
+                                        }
+
+                                        safeSetState(() {});
+                                      },
+                                      child: Row(
                                         mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
-                                            width: 8.0,
-                                            height: 8.0,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFF00FF00),
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: Image.network(
-                                                  widget.statusColor!,
-                                                ).image,
-                                              ),
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
                                           Text(
-                                            widget.aiOnlineStatus.toString(),
+                                            'AI Guidance Chat',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodySmall
+                                                .titleMedium
                                                 .override(
-                                                  font: GoogleFonts.inter(
-                                                    fontWeight: FontWeight.w500,
+                                                  font: GoogleFonts.interTight(
+                                                    fontWeight: FontWeight.w600,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)
-                                                            .bodySmall
+                                                            .titleMedium
                                                             .fontStyle,
                                                   ),
-                                                  color: Color(0xFF00FF00),
+                                                  color: Colors.white,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w600,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodySmall
+                                                          .titleMedium
                                                           .fontStyle,
                                                 ),
                                           ),
-                                        ].divide(SizedBox(width: 4.0)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 12.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              _model.apiResult6sm =
-                                  await FixFlowAIGroup.fixflowBrainCall.call();
-
-                              if (!(_model.apiResult6sm?.succeeded ?? true)) {
-                                context.pushNamed(FalseErrorWidget.routeName);
-                              }
-
-                              safeSetState(() {});
-                            },
-                            child: ListView(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 8.0, 12.0, 8.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      _model.apiResultc3l = await FixFlowAIGroup
-                                          .fixflowBrainCall
-                                          .call();
-
-                                      if (!(_model.apiResultc3l?.succeeded ??
-                                          true)) {
-                                        context.pushNamed(
-                                            FalseErrorWidget.routeName);
-                                      }
-
-                                      safeSetState(() {});
-                                    },
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF404040),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(16.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Container(
-                                                  width: 24.0,
-                                                  height: 24.0,
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFF8C00),
-                                                    shape: BoxShape.circle,
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Container(
+                                                width: 8.0,
+                                                height: 8.0,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFF00FF00),
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: Image.network(
+                                                      widget.statusColor!,
+                                                    ).image,
                                                   ),
-                                                  child: Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.0, 0.0),
-                                                    child: Icon(
-                                                      Icons.smart_toy_rounded,
-                                                      color: Color(0xFF1A1A1A),
-                                                      size: 16.0,
-                                                    ),
-                                                  ),
+                                                  shape: BoxShape.circle,
                                                 ),
-                                              ].divide(SizedBox(width: 8.0)),
-                                            ),
-                                            Text(
-                                              valueOrDefault<String>(
-                                                widget.aiConversation,
-                                                'FixFlow',
                                               ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color: Colors.white,
-                                                        letterSpacing: 0.0,
+                                              Text(
+                                                widget.aiOnlineStatus
+                                                    .toString(),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodySmall
+                                                    .override(
+                                                      font: GoogleFonts.inter(
                                                         fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
+                                                            FontWeight.w500,
                                                         fontStyle:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyMedium
+                                                                .bodySmall
                                                                 .fontStyle,
                                                       ),
-                                            ),
-                                          ].divide(SizedBox(height: 4.0)),
-                                        ),
+                                                      color: Color(0xFF00FF00),
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodySmall
+                                                              .fontStyle,
+                                                    ),
+                                              ),
+                                            ].divide(SizedBox(width: 4.0)),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                              ),
+                            );
+                          }),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -1014,14 +752,22 @@ class _MyProjectGuidanceWidgetState extends State<MyProjectGuidanceWidget> {
                                   _model.apiResultm18 = await FixFlowAIGroup
                                       .fixflowBrainCall
                                       .call(
-                                    userId: '',
-                                    screenContext: '',
+                                    userId: widget.conversation,
+                                    screenContext: widget.conversatioFlow,
                                     inputType: '',
                                     inputValue: '',
                                   );
 
-                                  if (!(_model.apiResultm18?.succeeded ??
+                                  if ((_model.apiResultm18?.succeeded ??
                                       true)) {
+                                    safeSetState(() {
+                                      _model.textController?.text =
+                                          valueOrDefault<String>(
+                                        widget.userConversation,
+                                        '-',
+                                      );
+                                    });
+                                  } else {
                                     context
                                         .pushNamed(FalseErrorWidget.routeName);
                                   }
@@ -1113,30 +859,64 @@ class _MyProjectGuidanceWidgetState extends State<MyProjectGuidanceWidget> {
                                     .asValidator(context),
                               ),
                             ),
-                            FlutterFlowIconButton(
-                              borderRadius: 8.0,
-                              buttonSize: 44.0,
-                              fillColor: Color(0xFFFF8C00),
-                              icon: Icon(
-                                Icons.send_rounded,
-                                color: Color(0xFF1A1A1A),
-                                size: 20.0,
+                            FutureBuilder<ApiCallResponse>(
+                              future: FixFlowAIGroup.messageCall.call(
+                                receiverId: widget.conversationOverview,
+                                messageText:
+                                    widget.conversationOverview?.toString(),
+                                inputMessageText:
+                                    widget.conversationOverview?.toString(),
                               ),
-                              onPressed: () async {
-                                _model.apiResultw44 =
-                                    await FixFlowAIGroup.fixflowBrainCall.call(
-                                  userId: widget.savedProject?.toString(),
-                                  screenContext:
-                                      widget.savedProject?.toString(),
-                                  inputType: widget.savedProject?.toString(),
-                                  inputValue: widget.savedProject?.toString(),
-                                );
-
-                                if (!(_model.apiResultw44?.succeeded ?? true)) {
-                                  context.pushNamed(FalseErrorWidget.routeName);
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
+                                      ),
+                                    ),
+                                  );
                                 }
+                                final iconButtonMessageResponse =
+                                    snapshot.data!;
 
-                                safeSetState(() {});
+                                return FlutterFlowIconButton(
+                                  borderRadius: 8.0,
+                                  buttonSize: 44.0,
+                                  fillColor: Color(0xFFFF8C00),
+                                  icon: Icon(
+                                    Icons.send_rounded,
+                                    color: Color(0xFF1A1A1A),
+                                    size: 20.0,
+                                  ),
+                                  onPressed: () async {
+                                    _model.apiResultw44 = await FixFlowAIGroup
+                                        .fixflowBrainCall
+                                        .call(
+                                      userId: widget.savedProject?.toString(),
+                                      screenContext:
+                                          widget.savedProject?.toString(),
+                                      inputType:
+                                          widget.savedProject?.toString(),
+                                      inputValue:
+                                          widget.savedProject?.toString(),
+                                    );
+
+                                    if (!(_model.apiResultw44?.succeeded ??
+                                        true)) {
+                                      context.pushNamed(
+                                          FalseErrorWidget.routeName);
+                                    }
+
+                                    safeSetState(() {});
+                                  },
+                                );
                               },
                             ),
                           ].divide(SizedBox(width: 8.0)),

@@ -1189,9 +1189,7 @@ class PostContractorProfileCall {
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
-   );
-
-
+    );
   }
 }
 
@@ -2723,7 +2721,11 @@ class PatchMaterialIdCall {
 }
 
 class MessageCall {
-  Future<ApiCallResponse> call() async {
+  Future<ApiCallResponse> call({
+    int? receiverId,
+    String? messageText = '',
+    String? inputMessageText = '',
+  }) async {
     final baseUrl = FixFlowAIGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
@@ -2731,7 +2733,9 @@ class MessageCall {
       apiUrl: '${baseUrl}/message',
       callType: ApiCallType.GET,
       headers: {},
-      params: {},
+      params: {
+        'receiver_id': receiverId,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -4854,7 +4858,8 @@ class FixflowBrainCall {
       apiUrl: '${baseUrl}/FixFlow_brain',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization': 'Bearer ${const String.fromEnvironment("OPENAI_API_KEY")}',
+        'Authorization':
+            'Bearer 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',
         'Content-Type': 'application/json',
       },
       params: {},
