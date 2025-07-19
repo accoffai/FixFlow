@@ -157,6 +157,10 @@ class _ProjectsummaryBuildWidgetState extends State<ProjectsummaryBuildWidget> {
         inputValue: widget.projectSummary?.toString(),
       );
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.salesEngineLogCall.call();

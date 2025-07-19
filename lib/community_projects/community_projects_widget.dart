@@ -1,8 +1,10 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'community_projects_model.dart';
 export 'community_projects_model.dart';
@@ -88,6 +90,19 @@ class _CommunityProjectsWidgetState extends State<CommunityProjectsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => CommunityProjectsModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiResultxvt = await FixFlowAIGroup.fixflowBrainCall.call();
+
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
+      if (!(_model.apiResultxvt?.succeeded ?? true)) {
+        context.pushNamed(FalseErrorWidget.routeName);
+      }
+    });
   }
 
   @override

@@ -112,6 +112,10 @@ class _FixFlowGPTWidgetState extends State<FixFlowGPTWidget> {
         inputValue: widget.fixflowgpt?.toString(),
       );
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.postSalesEngineLogCall.call();

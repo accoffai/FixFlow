@@ -93,6 +93,10 @@ class _FixFLowChatroomWidgetState extends State<FixFLowChatroomWidget> {
         inputValue: widget.fixFLowChat?.toString(),
       );
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.postSalesEngineLogCall.call();

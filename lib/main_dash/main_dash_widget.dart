@@ -141,6 +141,10 @@ class _MainDashWidgetState extends State<MainDashWidget>
         inputValue: widget.mainDash?.toString(),
       );
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.postSalesEngineLogCall.call();

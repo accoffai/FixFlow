@@ -112,6 +112,10 @@ class _MyProjectsWidgetState extends State<MyProjectsWidget> {
         inputValue: widget.savedProject?.toString(),
       );
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.postSalesEngineLogCall.call();

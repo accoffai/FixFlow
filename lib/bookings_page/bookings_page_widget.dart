@@ -169,6 +169,10 @@ class _BookingsPageWidgetState extends State<BookingsPageWidget> {
         inputValue: widget.myBookingsPage?.toString(),
       );
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.postSalesEngineLogCall.call();

@@ -333,6 +333,9 @@ class FixFlowAIGroup {
   static SearchContractorCall searchContractorCall = SearchContractorCall();
   static SubmitFeatureRequestCall submitFeatureRequestCall =
       SubmitFeatureRequestCall();
+  static OpenAIBuildControlCall openAIBuildControlCall =
+      OpenAIBuildControlCall();
+  static AlarmTriggerCall alarmTriggerCall = AlarmTriggerCall();
 }
 
 class AdminActionCall {
@@ -4987,6 +4990,48 @@ class SubmitFeatureRequestCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Submit Feature Request ',
       apiUrl: '${baseUrl}/Submit_Feature_Request',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class OpenAIBuildControlCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Open AI Build Control',
+      apiUrl: '${baseUrl}/openai_build_control',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AlarmTriggerCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = FixFlowAIGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Alarm Trigger',
+      apiUrl: '${baseUrl}/Alarm_Trigger',
       callType: ApiCallType.POST,
       headers: {},
       params: {},

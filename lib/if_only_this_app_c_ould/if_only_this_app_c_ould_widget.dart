@@ -93,6 +93,10 @@ class _IfOnlyThisAppCOuldWidgetState extends State<IfOnlyThisAppCOuldWidget> {
         inputValue: widget.ifOnlyAppPage?.toString(),
       );
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.salesEngineLogCall.call();

@@ -101,6 +101,10 @@ class _DiyguideWidgetState extends State<DiyguideWidget> {
         inputValue: widget.diyPage?.toString(),
       );
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.postSalesEngineLogCall.call();

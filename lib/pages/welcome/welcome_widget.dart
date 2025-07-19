@@ -80,6 +80,10 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.apiResult3pm = await FixFlowAIGroup.fixflowBrainCall.call();
 
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
       await FixFlowAIGroup.postAlgorithmActivityCall.call();
 
       await FixFlowAIGroup.postSalesEngineLogCall.call();

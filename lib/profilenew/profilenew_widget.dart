@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -54,6 +55,24 @@ class _ProfilenewWidgetState extends State<ProfilenewWidget> {
 
   @override
   void dispose() {
+    // On page dispose action.
+    () async {
+      _model.apiResult8x6 = await FixFlowAIGroup.fixflowBrainCall.call(
+        userId: widget.main?.toString(),
+        screenContext: widget.main?.toString(),
+        inputType: widget.main?.toString(),
+        inputValue: widget.main?.toString(),
+      );
+
+      await FixFlowAIGroup.alarmTriggerCall.call();
+
+      await FixFlowAIGroup.openAIBuildControlCall.call();
+
+      if (!(_model.apiResult8x6?.succeeded ?? true)) {
+        context.pushNamed(FalseErrorWidget.routeName);
+      }
+    }();
+
     _model.dispose();
 
     super.dispose();
