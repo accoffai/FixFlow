@@ -1,0 +1,53 @@
+workflows:
+  fixflow_build:
+    name: FixFlow Dev Build
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      vars:
+        FIREBASE_PROJECT_ID: "your-firebase-project-id"
+        ANDROID_FIREBASE_APP_ID: "your-android-app-id"
+        IOS_FIREBASE_APP_ID: "your-ios-app-id"
+      groups:
+        - firebase_credentials
+    cache:
+      cache_paths:
+        - "$HOME/.pub-cache"
+        - "build/"
+        - ".dart_tool/"
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter pub get
+      - name: Flutter clean
+        script: |
+          flutter clean
+      - name: Ensure correct Flutter environment
+        script: |
+          flutter doctor
+      - name: Firebase CLI setup
+        script: |
+          curl -sL https://firebase.tools | bash
+          firebase --version
+      - name: Configure Firebase for platforms
+        script: |
+          flutterfire configure \
+            --project=${FIREBASE_PROJECT_ID} \
+            --android-app-id=${ANDROID_FIREBASE_APP_ID} \
+            --ios-app-id=${IOS_FIREBASE_APP_ID} \
+            --yes
+      - name: Build Android
+        script: |
+          flutter build apk --debug
+      - name: Build iOS
+        script: |
+          flutter build ios --debug --no-codesign
+    artifacts:
+      - build/app/outputs/flutter-apk/app-debug.apk
+      - build/ios/iphoneos/*.app
+    publishing:
+      email:
+        recipients:
+          - your@email.com
