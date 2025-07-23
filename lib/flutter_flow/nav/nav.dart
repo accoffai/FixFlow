@@ -76,18 +76,43 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? EntryWidget() : WelcomeWidget(),
+          appStateNotifier.loggedIn ? FalseErrorWidget() : WelcomeWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? EntryWidget() : WelcomeWidget(),
+              appStateNotifier.loggedIn ? FalseErrorWidget() : WelcomeWidget(),
         ),
         FFRoute(
           name: WelcomeWidget.routeName,
           path: WelcomeWidget.routePath,
-          builder: (context, params) => WelcomeWidget(),
+          builder: (context, params) => WelcomeWidget(
+            password: params.getParam(
+              'password',
+              ParamType.String,
+            ),
+            confirmPassword: params.getParam(
+              'confirmPassword',
+              ParamType.String,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+            login: params.getParam(
+              'login',
+              ParamType.JSON,
+            ),
+            name: params.getParam(
+              'name',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: EntryWidget.routeName,
@@ -100,6 +125,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             gps: params.getParam(
               'gps',
               ParamType.LatLng,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            password: params.getParam(
+              'password',
+              ParamType.String,
+            ),
+            confirmPassword: params.getParam(
+              'confirmPassword',
+              ParamType.String,
+            ),
+            name: params.getParam(
+              'name',
+              ParamType.String,
             ),
           ),
         ),
@@ -725,6 +766,44 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: LoginWidget.routeName,
+          path: LoginWidget.routePath,
+          builder: (context, params) => LoginWidget(
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            password: params.getParam(
+              'password',
+              ParamType.String,
+            ),
+            nomore: params.getParam(
+              'nomore',
+              ParamType.JSON,
+            ),
+            myProjects: params.getParam(
+              'myProjects',
+              ParamType.JSON,
+            ),
+            mainDash: params.getParam(
+              'mainDash',
+              ParamType.JSON,
+            ),
+            gps: params.getParam(
+              'gps',
+              ParamType.LatLng,
+            ),
+            planProject: params.getParam(
+              'planProject',
+              ParamType.JSON,
+            ),
+            login: params.getParam(
+              'login',
+              ParamType.JSON,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -907,14 +986,14 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
+              ? Container(
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/IMG_6177.PNG',
+                      width: 2000.0,
+                      height: 500.0,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 )

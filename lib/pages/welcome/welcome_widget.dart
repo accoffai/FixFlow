@@ -54,7 +54,22 @@ export 'welcome_model.dart';
 /// DIY animation (e.g., measuring tape, blueprint fade-ins, or rotating
 /// tools).”
 class WelcomeWidget extends StatefulWidget {
-  const WelcomeWidget({super.key});
+  const WelcomeWidget({
+    super.key,
+    this.password,
+    this.confirmPassword,
+    this.email,
+    this.gps,
+    this.login,
+    this.name,
+  });
+
+  final String? password;
+  final String? confirmPassword;
+  final String? email;
+  final LatLng? gps;
+  final dynamic login;
+  final String? name;
 
   static String routeName = 'Welcome';
   static String routePath = '/welcome';
@@ -279,7 +294,35 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
                         children: [
                           FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed(EntryWidget.routeName);
+                              context.pushNamed(
+                                EntryWidget.routeName,
+                                queryParameters: {
+                                  'login': serializeParam(
+                                    widget.login,
+                                    ParamType.JSON,
+                                  ),
+                                  'gps': serializeParam(
+                                    widget.gps,
+                                    ParamType.LatLng,
+                                  ),
+                                  'email': serializeParam(
+                                    widget.email,
+                                    ParamType.String,
+                                  ),
+                                  'password': serializeParam(
+                                    widget.password,
+                                    ParamType.String,
+                                  ),
+                                  'confirmPassword': serializeParam(
+                                    widget.confirmPassword,
+                                    ParamType.String,
+                                  ),
+                                  'name': serializeParam(
+                                    '',
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                              );
 
                               _model.apiResultlfz =
                                   await FixFlowAIGroup.fixflowBrainCall.call();
@@ -332,7 +375,35 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
                                 password: '',
                               );
 
-                              context.pushNamed(EntryWidget.routeName);
+                              context.pushNamed(
+                                EntryWidget.routeName,
+                                queryParameters: {
+                                  'login': serializeParam(
+                                    widget.login,
+                                    ParamType.JSON,
+                                  ),
+                                  'gps': serializeParam(
+                                    widget.gps,
+                                    ParamType.LatLng,
+                                  ),
+                                  'email': serializeParam(
+                                    widget.email,
+                                    ParamType.String,
+                                  ),
+                                  'password': serializeParam(
+                                    widget.password,
+                                    ParamType.String,
+                                  ),
+                                  'confirmPassword': serializeParam(
+                                    widget.confirmPassword,
+                                    ParamType.String,
+                                  ),
+                                  'name': serializeParam(
+                                    widget.name,
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                              );
 
                               await FixFlowAIGroup.fixflowBrainCall.call();
 

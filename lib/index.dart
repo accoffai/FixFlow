@@ -24,3 +24,4 @@ export '/community_projects/community_projects_widget.dart'
     show CommunityProjectsWidget;
 export '/profilenew/profilenew_widget.dart' show ProfilenewWidget;
 export '/fix_flow_g_p_t/fix_flow_g_p_t_widget.dart' show FixFlowGPTWidget;
+export '/login/login_widget.dart' show LoginWidget;

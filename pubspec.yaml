@@ -34,6 +34,7 @@ dependencies:
   collection: 1.19.1
   csslib: 1.0.2
   dropdown_button2: 2.3.9
+  easy_debounce: 2.0.1
   equatable: 2.0.7
   file_picker: 10.1.9
   firebase_auth: 5.6.0
@@ -129,12 +130,13 @@ dev_dependencies:
 
 
 flutter_launcher_icons:
-  android: true
+  android: 'launcher_icon'
   ios: true
-  remove_alpha_ios: true
   web:
     generate: true
   image_path: 'assets/images/app_launcher_icon.PNG'
+  adaptive_icon_background: '#14181b'
+  adaptive_icon_foreground: 'assets/images/adaptive_foreground_icon.PNG'
 
 
 # For information on the generic Dart part of this file, see the
